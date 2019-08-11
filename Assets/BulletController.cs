@@ -14,9 +14,14 @@ public class BulletController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D coll) {
+		// 衝突したときにスコアを更新する
+		GameObject.Find ("Canvas").GetComponent<UIController> ().AddScore ();
+
 	    // 爆発エフェクトを生成する	
-		Instantiate (explosionPrefab, transform.position, Quaternion.identity);
-		Destroy (coll.gameObject);
+		GameObject effect = Instantiate (explosionPrefab, transform.position, Quaternion.identity);
+        Destroy(effect, 1.0f);
+
+        Destroy (coll.gameObject);
 		Destroy (gameObject);
 	}
 }
