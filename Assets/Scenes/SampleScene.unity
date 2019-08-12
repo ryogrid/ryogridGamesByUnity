@@ -258,8 +258,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CannonballPrefab: {fileID: 4988956426822452174, guid: e35c750e85f9d0b4eb4200f8d6c4a890,
     type: 3}
-  shotParamText: {fileID: 904966440}
-  MessageText: {fileID: 442071965}
   MatoPrefab: {fileID: 1983601652156961406, guid: fb859de6b76d2514d91528f2d3e2bf3c,
     type: 3}
 --- !u!1 &442071965
