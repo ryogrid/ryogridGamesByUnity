@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: cf9cd42416bf1c4448b7a7d1d165cb23
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - MatoPrefab: {fileID: 1983601652156961406, guid: fb859de6b76d2514d91528f2d3e2bf3c,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
