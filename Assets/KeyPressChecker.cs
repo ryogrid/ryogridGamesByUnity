@@ -13,6 +13,7 @@ public class KeyPressChecker : MonoBehaviour
     private int shotAngle = 45;
 
     private GameObject createdMato = null;
+    private GameObject createdCannonball = null;
 
     private float CHECK_INTERVAL = 0.01f;
     private float msgTimeCounter = 0;
@@ -101,11 +102,15 @@ public class KeyPressChecker : MonoBehaviour
 
     void shotNewCannonbool()
     {
-        GameObject cannon = Instantiate(CannonballPrefab, new Vector3(8.5f, -4.5f, 0), Quaternion.identity);
+        if (createdCannonball != null)
+        {
+            return;
+        }
+        createdCannonball = Instantiate(CannonballPrefab, new Vector3(8.5f, -4.5f, 0), Quaternion.identity);
         float x_power = -1 * 2 * Mathf.Cos((Mathf.PI / 2f) * (shotAngle / 90f)) * shotPower;
         float y_power = 2f * Mathf.Sin((Mathf.PI / 2f) * (shotAngle / 90f)) * shotPower;
 
         //cannon.GetComponent<Rigidbody2D>().AddForce(new Vector2(-500, 700));
-        cannon.GetComponent<Rigidbody2D>().AddForce(new Vector2(x_power, y_power));
+        createdCannonball.GetComponent<Rigidbody2D>().AddForce(new Vector2(x_power, y_power));
     }
 }
