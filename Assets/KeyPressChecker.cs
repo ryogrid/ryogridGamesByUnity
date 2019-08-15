@@ -9,21 +9,28 @@ public class KeyPressChecker : MonoBehaviour
     public GameObject CannonballPrefab;
     public GameObject MatoPrefab;
 
-    private int shotPower = 400;
-    private int shotAngle = 45;
+    private int shotPowerP1 = 400;
+    private int shotPowerP2 = 400;
+    private int shotAngleP1 = 45;
+    private int shotAngleP2 = 45;
 
     private GameObject createdMato = null;
+    private GameObject createdCannonball = null;
 
     private float CHECK_INTERVAL = 0.01f;
     private float msgTimeCounter = 0;
 
-    GameObject ShotParamText;
+    GameObject ShotParamText1P;
+    GameObject ShotParamText2P;
     GameObject MessageText;
+
+    private bool isTurnOfP1 = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        ShotParamText = GameObject.Find("ShotParamText");
+        ShotParamText1P = GameObject.Find("ShotParamText1P");
+        ShotParamText2P = GameObject.Find("ShotParamText2P");
         MessageText = GameObject.Find("MessageText");
         InvokeRepeating("checkKeyPress", CHECK_INTERVAL, CHECK_INTERVAL);
         placeMato();
@@ -53,28 +60,47 @@ public class KeyPressChecker : MonoBehaviour
             shotNewCannonbool();
 		}
  		if (Input.GetKeyDown (KeyCode.UpArrow)) {
-            if(shotAngle < 90)
+            if (isTurnOfP1)
             {
-                shotAngle += 1;
+                if (shotAngleP1 < 90) shotAngleP1 += 1;
             }
+            else
+            {
+                if (shotAngleP2 < 90) shotAngleP2 += 1;
+            }
+
 		}
  		if (Input.GetKeyDown (KeyCode.DownArrow)) {
-            if(shotAngle > 0)
+            if (isTurnOfP1)
             {
-                shotAngle -= 1;
+                if (shotAngleP1 > 0) shotAngleP1 -= 1;
+            }
+            else
+            {
+                if (shotAngleP2 > 0) shotAngleP2 -= 1;
             }
 		}
  		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-            if(shotPower < 700)
+            if (isTurnOfP1)
             {
-                shotPower += 10;
+                if (shotPowerP1 < 700) shotPowerP1 += 10;
             }
+            else
+            {
+                if (shotPowerP2 < 700) shotPowerP2 += 10;
+            }
+
 		}
  		if (Input.GetKeyDown (KeyCode.RightArrow)) {
-            if(shotPower > 0)
+            if (isTurnOfP1)
             {
-                shotPower -= 10;
+                if (shotPowerP1 > 0) shotPowerP1 -= 10;
             }
+            else
+            {
+                if (shotPowerP2 > 0) shotPowerP2 -= 10;
+            }
+
 		}
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -95,17 +121,36 @@ public class KeyPressChecker : MonoBehaviour
         {
             placeMato();
         }
-
-        ShotParamText.GetComponent<Text>().text = "Power: " + shotPower.ToString() + " Angle: " + shotAngle.ToString();
+        ShotParamText1P.GetComponent<Text>().text = (isTurnOfP1? "@ ":"") + "Power: " + shotPowerP1.ToString() + " Angle: " + shotAngleP1.ToString();
+        ShotParamText2P.GetComponent<Text>().text = (!isTurnOfP1 ? "@ ":"") + "Power: " + shotPowerP2.ToString() + " Angle: " + shotAngleP2.ToString();
     }
 
     void shotNewCannonbool()
     {
-        GameObject cannon = Instantiate(CannonballPrefab, new Vector3(8.5f, -4.5f, 0), Quaternion.identity);
-        float x_power = -1 * 2 * Mathf.Cos((Mathf.PI / 2f) * (shotAngle / 90f)) * shotPower;
-        float y_power = 2f * Mathf.Sin((Mathf.PI / 2f) * (shotAngle / 90f)) * shotPower;
-
+        if (createdCannonball != null)
+        {
+            return;
+        }
+        if (isTurnOfP1)
+        {
+            createdCannonball = Instantiate(CannonballPrefab, new Vector3(8.5f, -4.5f, 0), Quaternion.identity);
+            //createdCannonball = Instantiate(CannonballPrefab, new Vector3(10f, -4.5f, 0), Quaternion.identity);
+            float x_power = 1 * 2 * Mathf.Cos((Mathf.PI / 2f) * (shotAngleP1 / 90f)) * shotPowerP1;
+            float y_power = 2f * Mathf.Sin((Mathf.PI / 2f) * (shotAngleP1 / 90f)) * shotPowerP1;
         //cannon.GetComponent<Rigidbody2D>().AddForce(new Vector2(-500, 700));
-        cannon.GetComponent<Rigidbody2D>().AddForce(new Vector2(x_power, y_power));
+            createdCannonball.GetComponent<Rigidbody2D>().AddForce(new Vector2(x_power, y_power));
+            isTurnOfP1 = false;
+        }
+        else // Turn of P2
+        {
+            createdCannonball = Instantiate(CannonballPrefab, new Vector3(8.5f, -4.5f, 0), Quaternion.identity);
+            //createdCannonball = Instantiate(CannonballPrefab, new Vector3(10f, -4.5f, 0), Quaternion.identity);
+            float x_power = -1 * 2 * Mathf.Cos((Mathf.PI / 2f) * (shotAngleP2 / 90f)) * shotPowerP2;
+            float y_power = 2f * Mathf.Sin((Mathf.PI / 2f) * (shotAngleP2 / 90f)) * shotPowerP2;
+            //cannon.GetComponent<Rigidbody2D>().AddForce(new Vector2(-500, 700));
+            createdCannonball.GetComponent<Rigidbody2D>().AddForce(new Vector2(x_power, y_power));
+            isTurnOfP1 = true;
+        }
+        //isTurnOfP1 = !isTurnOfP1;
     }
 }
