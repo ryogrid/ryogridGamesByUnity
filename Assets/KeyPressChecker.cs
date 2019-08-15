@@ -133,8 +133,8 @@ public class KeyPressChecker : MonoBehaviour
         }
         if (isTurnOfP1)
         {
-            createdCannonball = Instantiate(CannonballPrefab, new Vector3(8.5f, -4.5f, 0), Quaternion.identity);
-            //createdCannonball = Instantiate(CannonballPrefab, new Vector3(10f, -4.5f, 0), Quaternion.identity);
+            //createdCannonball = Instantiate(CannonballPrefab, new Vector3(8.5f, -4.5f, 0), Quaternion.identity);
+            createdCannonball = Instantiate(CannonballPrefab, new Vector3(-8f, -4.5f, 0), Quaternion.identity);
             float x_power = 1 * 2 * Mathf.Cos((Mathf.PI / 2f) * (shotAngleP1 / 90f)) * shotPowerP1;
             float y_power = 2f * Mathf.Sin((Mathf.PI / 2f) * (shotAngleP1 / 90f)) * shotPowerP1;
         //cannon.GetComponent<Rigidbody2D>().AddForce(new Vector2(-500, 700));
@@ -143,8 +143,8 @@ public class KeyPressChecker : MonoBehaviour
         }
         else // Turn of P2
         {
-            createdCannonball = Instantiate(CannonballPrefab, new Vector3(8.5f, -4.5f, 0), Quaternion.identity);
-            //createdCannonball = Instantiate(CannonballPrefab, new Vector3(10f, -4.5f, 0), Quaternion.identity);
+            //createdCannonball = Instantiate(CannonballPrefab, new Vector3(8.5f, -4.5f, 0), Quaternion.identity);
+            createdCannonball = Instantiate(CannonballPrefab, new Vector3(8f, -4.5f, 0), Quaternion.identity);
             float x_power = -1 * 2 * Mathf.Cos((Mathf.PI / 2f) * (shotAngleP2 / 90f)) * shotPowerP2;
             float y_power = 2f * Mathf.Sin((Mathf.PI / 2f) * (shotAngleP2 / 90f)) * shotPowerP2;
             //cannon.GetComponent<Rigidbody2D>().AddForce(new Vector2(-500, 700));

@@ -13,7 +13,7 @@ public class CannonballController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.x < -8 || transform.position.y < -5.5) {
+        if (transform.position.x < -8 || transform.position.x > 8.5 || transform.position.y < -5.5) {
             Destroy(gameObject);
         }
     }
