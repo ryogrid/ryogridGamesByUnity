@@ -25,6 +25,9 @@ public class KeyPressChecker : MonoBehaviour
     GameObject MessageText;
 
     private bool isTurnOfP1 = true;
+    private float screenWidthUnits = -1;
+    private float screenHeightUnits = -1;
+    private const int PIXCELS_OF_UNIT = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -32,13 +35,14 @@ public class KeyPressChecker : MonoBehaviour
         ShotParamText1P = GameObject.Find("ShotParamText1P");
         ShotParamText2P = GameObject.Find("ShotParamText2P");
         MessageText = GameObject.Find("MessageText");
+        updateScreenSizeInfo();
         InvokeRepeating("checkKeyPress", CHECK_INTERVAL, CHECK_INTERVAL);
         placeMato();
     }
 
     public void placeMato()
     {
-        if(createdMato != null)
+        if (createdMato != null)
         {
             Destroy(createdMato);
             createdMato = null;
@@ -50,12 +54,19 @@ public class KeyPressChecker : MonoBehaviour
             Destroy(tmpMato);
         }
 
-        createdMato = Instantiate(MatoPrefab, new Vector3(Random.Range(-7f, 7f), Random.Range(-4f, 4f), 0), Quaternion.identity);
+        //createdMato = Instantiate(MatoPrefab, new Vector3(Random.Range(-7f, 7f), Random.Range(-4f, 4f), 0), Quaternion.identity);
+        createdMato = Instantiate(MatoPrefab, new Vector3(Random.Range(-0.45f * screenWidthUnits, 0.45f * screenWidthUnits), Random.Range(-0.45f * screenHeightUnits, 0.45f * screenHeightUnits), 0), Quaternion.identity);
     }
 
+    private void updateScreenSizeInfo()
+    {
+        screenWidthUnits = Screen.width / (float) PIXCELS_OF_UNIT;
+        screenHeightUnits = Screen.height / (float) PIXCELS_OF_UNIT;
+    }
 
     void checkKeyPress()
     {
+        updateScreenSizeInfo();
  		if (Input.GetKeyDown (KeyCode.Space)) {
             shotNewCannonbool();
 		}
@@ -133,24 +144,20 @@ public class KeyPressChecker : MonoBehaviour
         }
         if (isTurnOfP1)
         {
-            //createdCannonball = Instantiate(CannonballPrefab, new Vector3(8.5f, -4.5f, 0), Quaternion.identity);
-            createdCannonball = Instantiate(CannonballPrefab, new Vector3(-8f, -4.5f, 0), Quaternion.identity);
+            createdCannonball = Instantiate(CannonballPrefab, new Vector3(-0.499f * screenWidthUnits, -0.499f * screenHeightUnits, 0), Quaternion.identity);
+            //createdCannonball = Instantiate(CannonballPrefab, new Vector3(-8f, -4.5f, 0), Quaternion.identity);
             float x_power = 1 * 2 * Mathf.Cos((Mathf.PI / 2f) * (shotAngleP1 / 90f)) * shotPowerP1;
             float y_power = 2f * Mathf.Sin((Mathf.PI / 2f) * (shotAngleP1 / 90f)) * shotPowerP1;
-        //cannon.GetComponent<Rigidbody2D>().AddForce(new Vector2(-500, 700));
             createdCannonball.GetComponent<Rigidbody2D>().AddForce(new Vector2(x_power, y_power));
-            isTurnOfP1 = false;
         }
         else // Turn of P2
         {
-            //createdCannonball = Instantiate(CannonballPrefab, new Vector3(8.5f, -4.5f, 0), Quaternion.identity);
-            createdCannonball = Instantiate(CannonballPrefab, new Vector3(8f, -4.5f, 0), Quaternion.identity);
+            createdCannonball = Instantiate(CannonballPrefab, new Vector3(0.499f * screenWidthUnits, -0.499f * screenHeightUnits, 0), Quaternion.identity);
+            //createdCannonball = Instantiate(CannonballPrefab, new Vector3(8f, -4.5f, 0), Quaternion.identity);
             float x_power = -1 * 2 * Mathf.Cos((Mathf.PI / 2f) * (shotAngleP2 / 90f)) * shotPowerP2;
             float y_power = 2f * Mathf.Sin((Mathf.PI / 2f) * (shotAngleP2 / 90f)) * shotPowerP2;
-            //cannon.GetComponent<Rigidbody2D>().AddForce(new Vector2(-500, 700));
             createdCannonball.GetComponent<Rigidbody2D>().AddForce(new Vector2(x_power, y_power));
-            isTurnOfP1 = true;
         }
-        //isTurnOfP1 = !isTurnOfP1;
+        isTurnOfP1 = !isTurnOfP1;
     }
 }
