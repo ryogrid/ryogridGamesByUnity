@@ -261,6 +261,8 @@ MonoBehaviour:
     type: 3}
   MatoPrefab: {fileID: 1983601652156961406, guid: fb859de6b76d2514d91528f2d3e2bf3c,
     type: 3}
+  BlockPrefab: {fileID: 3342907419853016781, guid: 3a3c17a9e8fc471438902a6daed15a5e,
+    type: 3}
 --- !u!1 &442071965
 GameObject:
   m_ObjectHideFlags: 0

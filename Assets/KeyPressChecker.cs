@@ -8,6 +8,7 @@ public class KeyPressChecker : MonoBehaviour
 
     public GameObject CannonballPrefab;
     public GameObject MatoPrefab;
+    public GameObject BlockPrefab;
 
     private int shotPowerP1 = 400;
     private int shotPowerP2 = 400;
@@ -29,6 +30,7 @@ public class KeyPressChecker : MonoBehaviour
     private float screenWidthUnits = -1;
     private float screenHeightUnits = -1;
     private const int PIXCELS_OF_UNIT = 100;
+    private const int BLOCKS_NUM = 60;
 
     // Start is called before the first frame update
     void Start()
@@ -68,6 +70,17 @@ public class KeyPressChecker : MonoBehaviour
         */
         createdMato1P = Instantiate(MatoPrefab, new Vector3(-0.499f * screenWidthUnits, -0.4f * screenHeightUnits, 0), Quaternion.identity);
         createdMato2P = Instantiate(MatoPrefab, new Vector3(0.499f * screenWidthUnits, -0.4f * screenHeightUnits, 0), Quaternion.identity);
+
+        //障害物を配置
+        placeBlocksRandom();
+    }
+
+    private void placeBlocksRandom()
+    {
+        for(int ii=0; ii < BLOCKS_NUM; ii++)
+        {
+            Instantiate(BlockPrefab, new Vector3(Random.Range(-0.4f * screenWidthUnits, 0.4f * screenWidthUnits), Random.Range(-0.4f * screenHeightUnits, 0.5f * screenHeightUnits), 0), Quaternion.identity);
+        }
     }
 
     private void updateScreenSizeInfo()
