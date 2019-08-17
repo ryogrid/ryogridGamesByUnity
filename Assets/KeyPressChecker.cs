@@ -14,7 +14,8 @@ public class KeyPressChecker : MonoBehaviour
     private int shotAngleP1 = 45;
     private int shotAngleP2 = 45;
 
-    private GameObject createdMato = null;
+    private GameObject createdMato1P = null;
+    private GameObject createdMato2P = null;
     private GameObject createdCannonball = null;
 
     private float CHECK_INTERVAL = 0.01f;
@@ -42,20 +43,31 @@ public class KeyPressChecker : MonoBehaviour
 
     public void placeMato()
     {
-        if (createdMato != null)
+        if (createdMato1P != null)
         {
-            Destroy(createdMato);
-            createdMato = null;
+            Destroy(createdMato1P);
+            createdMato1P = null;
         }
-        //他にもインスタンスが存在する場合があるので、それもケア (普通に的を消した場合)
-        GameObject tmpMato = GameObject.Find("MatoPrefab");
-        if(tmpMato != null)
+        if (createdMato2P != null)
         {
-            Destroy(tmpMato);
+            Destroy(createdMato2P);
+            createdMato2P = null;
         }
+        /*
+                //他にもインスタンスが存在する場合があるので、それもケア (普通に的を消した場合)
+                GameObject tmpMato = GameObject.Find("MatoPrefab");
+                if(tmpMato != null)
+                {
+                    Destroy(tmpMato);
+                }
+        */
 
-        //createdMato = Instantiate(MatoPrefab, new Vector3(Random.Range(-7f, 7f), Random.Range(-4f, 4f), 0), Quaternion.identity);
-        createdMato = Instantiate(MatoPrefab, new Vector3(Random.Range(-0.45f * screenWidthUnits, 0.45f * screenWidthUnits), Random.Range(-0.45f * screenHeightUnits, 0.45f * screenHeightUnits), 0), Quaternion.identity);
+        /*
+                createdMato1P = Instantiate(MatoPrefab, new Vector3(Random.Range(-0.45f * screenWidthUnits, 0.45f * screenWidthUnits), Random.Range(-0.45f * screenHeightUnits, 0.45f * screenHeightUnits), 0), Quaternion.identity);
+                createdMato2P = Instantiate(MatoPrefab, new Vector3(Random.Range(-0.45f * screenWidthUnits, 0.45f * screenWidthUnits), Random.Range(-0.45f * screenHeightUnits, 0.45f * screenHeightUnits), 0), Quaternion.identity);
+        */
+        createdMato1P = Instantiate(MatoPrefab, new Vector3(-0.499f * screenWidthUnits, -0.4f * screenHeightUnits, 0), Quaternion.identity);
+        createdMato2P = Instantiate(MatoPrefab, new Vector3(0.499f * screenWidthUnits, -0.4f * screenHeightUnits, 0), Quaternion.identity);
     }
 
     private void updateScreenSizeInfo()
@@ -128,7 +140,11 @@ public class KeyPressChecker : MonoBehaviour
         }
 
         //的がユーザのプレイで消滅していたら再生成する
-        if(createdMato == null)
+        if(createdMato1P == null)
+        {
+            placeMato();
+        }
+        if(createdMato2P == null)
         {
             placeMato();
         }
