@@ -207,7 +207,7 @@ RectTransform:
   - {fileID: 442071966}
   - {fileID: 1613085866}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -243,7 +243,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &128722261
 MonoBehaviour:
@@ -262,6 +262,8 @@ MonoBehaviour:
   MatoPrefab: {fileID: 1983601652156961406, guid: fb859de6b76d2514d91528f2d3e2bf3c,
     type: 3}
   BlockPrefab: {fileID: 3342907419853016781, guid: 3a3c17a9e8fc471438902a6daed15a5e,
+    type: 3}
+  CannonPolePrefab: {fileID: 2822484640313464517, guid: b43c52efe42cbe1438410b03ea57a02d,
     type: 3}
 --- !u!1 &442071965
 GameObject:

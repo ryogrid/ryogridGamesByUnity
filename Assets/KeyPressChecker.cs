@@ -9,15 +9,19 @@ public class KeyPressChecker : MonoBehaviour
     public GameObject CannonballPrefab;
     public GameObject MatoPrefab;
     public GameObject BlockPrefab;
+    public GameObject CannonPolePrefab;
 
-    private int shotPowerP1 = 400;
-    private int shotPowerP2 = 400;
-    private int shotAngleP1 = 45;
-    private int shotAngleP2 = 45;
+    private int shotPower1P = 400;
+    private int shotPower2P = 400;
+    private int shotAngle1P = 0;
+    private int shotAngle2P = 0;
 
     private GameObject createdMato1P = null;
     private GameObject createdMato2P = null;
     private GameObject createdCannonball = null;
+
+    private GameObject createdPole1P = null;
+    private GameObject createdPole2P = null;
 
     private float CHECK_INTERVAL = 0.01f;
     private float msgTimeCounter = 0;
@@ -55,31 +59,34 @@ public class KeyPressChecker : MonoBehaviour
             Destroy(createdMato2P);
             createdMato2P = null;
         }
-        /*
-                //他にもインスタンスが存在する場合があるので、それもケア (普通に的を消した場合)
-                GameObject tmpMato = GameObject.Find("MatoPrefab");
-                if(tmpMato != null)
-                {
-                    Destroy(tmpMato);
-                }
-        */
+        if (createdPole1P != null)
+        {
+            Destroy(createdPole1P);
+            createdPole1P = null;
+        }
+        if (createdPole2P != null)
+        {
+            Destroy(createdPole2P);
+            createdPole2P = null;
+        }
 
-        /*
-                createdMato1P = Instantiate(MatoPrefab, new Vector3(Random.Range(-0.45f * screenWidthUnits, 0.45f * screenWidthUnits), Random.Range(-0.45f * screenHeightUnits, 0.45f * screenHeightUnits), 0), Quaternion.identity);
-                createdMato2P = Instantiate(MatoPrefab, new Vector3(Random.Range(-0.45f * screenWidthUnits, 0.45f * screenWidthUnits), Random.Range(-0.45f * screenHeightUnits, 0.45f * screenHeightUnits), 0), Quaternion.identity);
-        */
-        createdMato1P = Instantiate(MatoPrefab, new Vector3(-0.499f * screenWidthUnits, -0.4f * screenHeightUnits, 0), Quaternion.identity);
-        createdMato2P = Instantiate(MatoPrefab, new Vector3(0.499f * screenWidthUnits, -0.4f * screenHeightUnits, 0), Quaternion.identity);
+        createdMato1P = Instantiate(MatoPrefab, new Vector3(-0.499f * screenWidthUnits, -0.35f * screenHeightUnits, 0), Quaternion.identity);
+        createdMato2P = Instantiate(MatoPrefab, new Vector3(0.499f * screenWidthUnits, -0.35f * screenHeightUnits, 0), Quaternion.identity);
+        createdPole1P = Instantiate(CannonPolePrefab, new Vector3(-0.499f * screenWidthUnits, -0.499f * screenHeightUnits, 0), Quaternion.identity);
+        createdPole2P = Instantiate(CannonPolePrefab, new Vector3(0.499f * screenWidthUnits, -0.499f * screenHeightUnits, 0), Quaternion.identity);
+        createdPole2P.transform.Rotate(new Vector3(0f, 0f, 180f));
+        shotAngle1P = 0;
+        shotAngle2P = 0;
 
         //画面上の障害物を全て消す
         var clones = GameObject.FindGameObjectsWithTag("block");
-        foreach(var clone in clones)
+        foreach (var clone in clones)
         {
             Destroy(clone);
         }
 
         //障害物を配置
-        placeBlocksRandom();
+        //placeBlocksRandom();
     }
 
     private void placeBlocksRandom()
@@ -105,43 +112,59 @@ public class KeyPressChecker : MonoBehaviour
  		if (Input.GetKeyDown (KeyCode.UpArrow)) {
             if (isTurnOfP1)
             {
-                if (shotAngleP1 < 90) shotAngleP1 += 1;
+                if (shotAngle1P < 90)
+                {
+                    shotAngle1P += 1;
+                    createdPole1P.transform.Rotate(new Vector3(0f, 0f, 1f));
+                }
             }
             else
             {
-                if (shotAngleP2 < 90) shotAngleP2 += 1;
+                if (shotAngle2P < 90)
+                {
+                    shotAngle2P += 1;
+                    createdPole2P.transform.Rotate(new Vector3(0f, 0f, -1f));
+                }
             }
 
 		}
  		if (Input.GetKeyDown (KeyCode.DownArrow)) {
             if (isTurnOfP1)
             {
-                if (shotAngleP1 > 0) shotAngleP1 -= 1;
+                if (shotAngle1P > 0)
+                {
+                    createdPole1P.transform.Rotate(new Vector3(0f, 0f, -1f));
+                    shotAngle1P -= 1;
+                }
             }
             else
             {
-                if (shotAngleP2 > 0) shotAngleP2 -= 1;
+                if (shotAngle2P > 0)
+                {
+                    createdPole1P.transform.Rotate(new Vector3(0f, 0f, 1f));
+                    shotAngle2P -= 1;
+                }
             }
 		}
  		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
             if (isTurnOfP1)
             {
-                if (shotPowerP1 < 700) shotPowerP1 += 10;
+                if (shotPower1P < 700)  shotPower1P += 10;
             }
             else
             {
-                if (shotPowerP2 < 700) shotPowerP2 += 10;
+                if (shotPower2P < 700)  shotPower2P += 10;
             }
 
 		}
  		if (Input.GetKeyDown (KeyCode.RightArrow)) {
             if (isTurnOfP1)
             {
-                if (shotPowerP1 > 0) shotPowerP1 -= 10;
+                if (shotPower1P > 0) shotPower1P -= 10;
             }
             else
             {
-                if (shotPowerP2 > 0) shotPowerP2 -= 10;
+                if (shotPower2P > 0) shotPower2P -= 10;
             }
 
 		}
@@ -170,8 +193,8 @@ public class KeyPressChecker : MonoBehaviour
         {
             placeMato();
         }
-        ShotParamText1P.GetComponent<Text>().text = (isTurnOfP1? "@ ":"") + "Power: " + shotPowerP1.ToString() + " Angle: " + shotAngleP1.ToString();
-        ShotParamText2P.GetComponent<Text>().text = (!isTurnOfP1 ? "@ ":"") + "Power: " + shotPowerP2.ToString() + " Angle: " + shotAngleP2.ToString();
+        ShotParamText1P.GetComponent<Text>().text = (isTurnOfP1? "@ ":"") + "Power: " + shotPower1P.ToString() + " Angle: " + shotAngle1P.ToString();
+        ShotParamText2P.GetComponent<Text>().text = (!isTurnOfP1 ? "@ ":"") + "Power: " + shotPower2P.ToString() + " Angle: " + shotAngle2P.ToString();
     }
 
     void shotNewCannonbool()
@@ -184,16 +207,16 @@ public class KeyPressChecker : MonoBehaviour
         {
             createdCannonball = Instantiate(CannonballPrefab, new Vector3(-0.499f * screenWidthUnits, -0.499f * screenHeightUnits, 0), Quaternion.identity);
             //createdCannonball = Instantiate(CannonballPrefab, new Vector3(-8f, -4.5f, 0), Quaternion.identity);
-            float x_power = 1 * 2 * Mathf.Cos((Mathf.PI / 2f) * (shotAngleP1 / 90f)) * shotPowerP1;
-            float y_power = 2f * Mathf.Sin((Mathf.PI / 2f) * (shotAngleP1 / 90f)) * shotPowerP1;
+            float x_power = 1 * 2 * Mathf.Cos((Mathf.PI / 2f) * (shotAngle1P / 90f)) * shotPower1P;
+            float y_power = 2f * Mathf.Sin((Mathf.PI / 2f) * (shotAngle1P / 90f)) * shotPower1P;
             createdCannonball.GetComponent<Rigidbody2D>().AddForce(new Vector2(x_power, y_power));
         }
         else // Turn of P2
         {
             createdCannonball = Instantiate(CannonballPrefab, new Vector3(0.499f * screenWidthUnits, -0.499f * screenHeightUnits, 0), Quaternion.identity);
             //createdCannonball = Instantiate(CannonballPrefab, new Vector3(8f, -4.5f, 0), Quaternion.identity);
-            float x_power = -1 * 2 * Mathf.Cos((Mathf.PI / 2f) * (shotAngleP2 / 90f)) * shotPowerP2;
-            float y_power = 2f * Mathf.Sin((Mathf.PI / 2f) * (shotAngleP2 / 90f)) * shotPowerP2;
+            float x_power = -1 * 2 * Mathf.Cos((Mathf.PI / 2f) * (shotAngle2P / 90f)) * shotPower2P;
+            float y_power = 2f * Mathf.Sin((Mathf.PI / 2f) * (shotAngle2P / 90f)) * shotPower2P;
             createdCannonball.GetComponent<Rigidbody2D>().AddForce(new Vector2(x_power, y_power));
         }
         isTurnOfP1 = !isTurnOfP1;
