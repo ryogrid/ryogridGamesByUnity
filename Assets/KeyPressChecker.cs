@@ -71,6 +71,13 @@ public class KeyPressChecker : MonoBehaviour
         createdMato1P = Instantiate(MatoPrefab, new Vector3(-0.499f * screenWidthUnits, -0.4f * screenHeightUnits, 0), Quaternion.identity);
         createdMato2P = Instantiate(MatoPrefab, new Vector3(0.499f * screenWidthUnits, -0.4f * screenHeightUnits, 0), Quaternion.identity);
 
+        //画面上の障害物を全て消す
+        var clones = GameObject.FindGameObjectsWithTag("block");
+        foreach(var clone in clones)
+        {
+            Destroy(clone);
+        }
+
         //障害物を配置
         placeBlocksRandom();
     }
@@ -138,11 +145,13 @@ public class KeyPressChecker : MonoBehaviour
             }
 
 		}
+/*
         if (Input.GetKeyDown(KeyCode.M))
         {
             placeMato();
             MessageText.GetComponent<Text>().text = "ギブアップか・・・";
         }
+*/
 
         //一定間隔で定期的にクリアする
         msgTimeCounter += CHECK_INTERVAL;
