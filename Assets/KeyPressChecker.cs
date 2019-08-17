@@ -86,7 +86,7 @@ public class KeyPressChecker : MonoBehaviour
         }
 
         //障害物を配置
-        //placeBlocksRandom();
+        placeBlocksRandom();
     }
 
     private void placeBlocksRandom()
