@@ -74,7 +74,8 @@ public class KeyPressChecker : MonoBehaviour
         createdMato2P = Instantiate(MatoPrefab, new Vector3(0.499f * screenWidthUnits, -0.35f * screenHeightUnits, 0), Quaternion.identity);
         createdPole1P = Instantiate(CannonPolePrefab, new Vector3(-0.499f * screenWidthUnits, -0.499f * screenHeightUnits, 0), Quaternion.identity);
         createdPole2P = Instantiate(CannonPolePrefab, new Vector3(0.499f * screenWidthUnits, -0.499f * screenHeightUnits, 0), Quaternion.identity);
-        createdPole2P.transform.Rotate(new Vector3(0f, 0f, 180f));
+        //createdPole2P.transform.Rotate(new Vector3(0f, 0f, 180f));
+        iTween.RotateTo(createdPole2P, iTween.Hash("z", 180f));
         shotAngle1P = 0;
         shotAngle2P = 0;
 
@@ -115,7 +116,8 @@ public class KeyPressChecker : MonoBehaviour
                 if (shotAngle1P < 90)
                 {
                     shotAngle1P += 1;
-                    createdPole1P.transform.Rotate(new Vector3(0f, 0f, 1f));
+                    //createdPole1P.transform.Rotate(new Vector3(0f, 0f, 1f));
+                    iTween.RotateTo(createdPole1P, iTween.Hash("z", shotAngle1P));
                 }
             }
             else
@@ -123,7 +125,8 @@ public class KeyPressChecker : MonoBehaviour
                 if (shotAngle2P < 90)
                 {
                     shotAngle2P += 1;
-                    createdPole2P.transform.Rotate(new Vector3(0f, 0f, -1f));
+                    //createdPole2P.transform.Rotate(new Vector3(0f, 0f, -1f));
+                    iTween.RotateTo(createdPole2P, iTween.Hash("z", 180f - shotAngle2P));
                 }
             }
 
@@ -133,16 +136,18 @@ public class KeyPressChecker : MonoBehaviour
             {
                 if (shotAngle1P > 0)
                 {
-                    createdPole1P.transform.Rotate(new Vector3(0f, 0f, -1f));
                     shotAngle1P -= 1;
+                    //createdPole1P.transform.Rotate(new Vector3(0f, 0f, -1f));
+                    iTween.RotateTo(createdPole1P, iTween.Hash("z", shotAngle1P));
                 }
             }
             else
             {
                 if (shotAngle2P > 0)
                 {
-                    createdPole1P.transform.Rotate(new Vector3(0f, 0f, 1f));
                     shotAngle2P -= 1;
+                    //createdPole1P.transform.Rotate(new Vector3(0f, 0f, 1f));
+                    iTween.RotateTo(createdPole2P, iTween.Hash("z", 180f - shotAngle2P));
                 }
             }
 		}
