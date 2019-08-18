@@ -34,18 +34,25 @@ public class MatoController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-		//Destroy (coll.gameObject);
-        GameObject MessageText = GameObject.Find("MessageText");
-        if(gameObject.transform.position.x < 0f)
+        GameObject ShotParamText1P = GameObject.Find("ShotParamText1P");
+        bool isTurn1P = true;
+        if(ShotParamText1P.GetComponent<Text>().text.IndexOf("@") != -1)
         {
-            MessageText.GetComponent<Text>().text = "2Pの勝利!!!";
-        }
-        else
-        {
-            MessageText.GetComponent<Text>().text = "1Pの勝利!!!";
+            isTurn1P = false;
         }
 
-		Destroy (gameObject);
+        GameObject MessageText = GameObject.Find("MessageText");
+        if(gameObject.transform.position.x < 0f && !isTurn1P)
+        {
+            MessageText.GetComponent<Text>().text = "2Pの勝利!!!";
+            Destroy(gameObject);
+        }
+        else if(gameObject.transform.position.x > 0f && isTurn1P)
+        {
+            MessageText.GetComponent<Text>().text = "1Pの勝利!!!";
+            Destroy(gameObject);
+        }
+
         //Instantiate(MatoPrefab, new Vector3(Random.Range(-7f, 7f), Random.Range(-4f, 4f), 0), Quaternion.identity);
         //Instantiate(gameObject, new Vector3(Random.Range(-7f, 7f), Random.Range(-4f, 4f), 0), Quaternion.identity);
 /*

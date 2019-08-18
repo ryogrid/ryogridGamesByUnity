@@ -34,10 +34,13 @@ public class BlockController : MonoBehaviour
 
         //Debug.Log(recv_force);
 
-        if(taikyudo <= 0)
+        //gameObject.GetComponent<Collider2D>().isTrigger = true;
+        //gameObject.GetComponent<Rigidbody2D>().simulated = false;
+        //Destroy(gameObject);
+
+        if (taikyudo <= 0)
         {
             Destroy(gameObject);
         }
-        //Destroy (gameObject);
     }
 }
