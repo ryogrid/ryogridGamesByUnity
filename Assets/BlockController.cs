@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class BlockController : MonoBehaviour
 {
+    private const float TAIKYUDO_MAX = 50f;
+    private const float CANONBALL_MASS = 1f;
+    private float taikyudo = TAIKYUDO_MAX;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        //taikyudo = TAIKYUDO_MAX;
     }
 
     // Update is called once per frame
@@ -18,7 +22,22 @@ public class BlockController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-		//Destroy (coll.gameObject);
-		Destroy (gameObject);
+        //Debug.Log(other.relativeVelocity);
+        float vx = other.relativeVelocity.x;
+        float vy = other.relativeVelocity.y;
+        float recv_force = Mathf.Sqrt(vx * vx + vy * vy);
+        taikyudo -= recv_force;
+
+        Color color = gameObject.GetComponent<Renderer>().material.color;
+        color.a = (taikyudo / TAIKYUDO_MAX);
+        gameObject.GetComponent<Renderer>().material.color = color;
+
+        //Debug.Log(recv_force);
+
+        if(taikyudo <= 0)
+        {
+            Destroy(gameObject);
+        }
+        //Destroy (gameObject);
     }
 }

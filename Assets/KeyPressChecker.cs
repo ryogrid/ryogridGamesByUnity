@@ -23,7 +23,7 @@ public class KeyPressChecker : MonoBehaviour
     private GameObject createdPole1P = null;
     private GameObject createdPole2P = null;
 
-    private float CHECK_INTERVAL = 0.01f;
+    private const float CHECK_INTERVAL = 0.01f;
     private float msgTimeCounter = 0;
 
     GameObject ShotParamText1P;
@@ -36,7 +36,7 @@ public class KeyPressChecker : MonoBehaviour
     private const int PIXCELS_OF_UNIT = 100;
     private const int BLOCKS_NUM = 60;
 
-    private bool IS_MOUNTAIN = false;
+    private const bool IS_MOUNTAIN = false;
 
     // Start is called before the first frame update
     void Start()
