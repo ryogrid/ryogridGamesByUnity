@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlockController : MonoBehaviour
 {
-    private const float TAIKYUDO_MAX = 50f;
+    private const float TAIKYUDO_MAX = 25f;
     private const float CANONBALL_MASS = 1f;
     private float taikyudo = TAIKYUDO_MAX;
 
