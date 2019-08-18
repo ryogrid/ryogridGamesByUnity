@@ -34,7 +34,9 @@ public class KeyPressChecker : MonoBehaviour
     private float screenWidthUnits = -1;
     private float screenHeightUnits = -1;
     private const int PIXCELS_OF_UNIT = 100;
-    private const int BLOCKS_NUM = 150;//60;
+    private const int BLOCKS_NUM = 60;
+
+    private bool IS_MOUNTAIN = false;
 
     // Start is called before the first frame update
     void Start()
@@ -92,21 +94,26 @@ public class KeyPressChecker : MonoBehaviour
 
     private void placeBlocksRandom()
     {
-
-        for (int ii = 0; ii < BLOCKS_NUM; ii++)
+        if (IS_MOUNTAIN)
         {
-            /*
-            float gauss_rand_x = 0;
-            for(int jj=0; jj < 10; jj++)
+            for (int ii = 0; ii < 150; ii++)
             {
-                gauss_rand_x += Random.Range(-0.4f * screenWidthUnits, 0.4f * screenWidthUnits);
+                float gauss_rand_x = 0;
+                for(int jj=0; jj < 2; jj++)
+                {
+                    gauss_rand_x += Random.Range(-0.4f, 0.4f);
+                }
+                gauss_rand_x /= 2f;
+                float y_cood = ((1f - Mathf.Abs(gauss_rand_x) / 0.4f) * 0.6f * screenHeightUnits * Random.Range(0f, 1f)) - (0.5f * screenHeightUnits);
+                Instantiate(BlockPrefab, new Vector3(gauss_rand_x * screenWidthUnits, y_cood, 0), Quaternion.identity);
             }
-            gauss_rand_x /= 10f;
-            */
-            float rand_x = Random.Range(-0.4f, 0.4f);
-            float y_cood = ((1f - Mathf.Abs(rand_x) / 0.4f) * 0.6f * screenHeightUnits * Random.Range(0f, 1f)) - (0.5f * screenHeightUnits);
-            Instantiate(BlockPrefab, new Vector3(rand_x * screenWidthUnits, y_cood, 0), Quaternion.identity);
-            //Instantiate(BlockPrefab, new Vector3(Random.Range(-0.4f * screenWidthUnits, 0.4f * screenWidthUnits), Random.Range(-0.4f * screenHeightUnits, 0.5f * screenHeightUnits), 0), Quaternion.identity);
+        }
+        else
+        {
+            for (int ii = 0; ii < BLOCKS_NUM; ii++)
+            {
+                Instantiate(BlockPrefab, new Vector3(Random.Range(-0.4f * screenWidthUnits, 0.4f * screenWidthUnits), Random.Range(-0.4f * screenHeightUnits, 0.5f * screenHeightUnits), 0), Quaternion.identity);
+            }
         }
     }
 
