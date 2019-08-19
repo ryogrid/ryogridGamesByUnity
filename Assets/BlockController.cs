@@ -29,6 +29,7 @@ public class BlockController : MonoBehaviour
 
         Rigidbody2D ball = other.gameObject.GetComponent<Rigidbody2D>();
         float slowDownRatio = (recv_force - taikyudo) / recv_force;
+        if(slowDownRatio < 0) slowDownRatio = 0;
         ball.velocity = new Vector2(vx * slowDownRatio, vy * slowDownRatio);
 
         taikyudo -= recv_force;

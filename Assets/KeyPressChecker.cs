@@ -174,11 +174,11 @@ public class KeyPressChecker : MonoBehaviour
  		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
             if (isTurnOfP1)
             {
-                if (shotPower1P < 700)  shotPower1P += 10;
+                if (shotPower1P < 1000)  shotPower1P += 10;
             }
             else
             {
-                if (shotPower2P < 700)  shotPower2P += 10;
+                if (shotPower2P < 1000)  shotPower2P += 10;
             }
 
 		}

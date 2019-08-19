@@ -10,10 +10,11 @@ public class CannonballController : MonoBehaviour
     private const int PIXCELS_OF_UNIT = 100;
     private Vector2 lastVelocity;
     private Rigidbody2D rb;
+    private Vector3 lastPosition;
 
     void Start()
     {
-        this.rb = this.GetComponent<Rigidbody2D>();
+        //lastPositioin = gameObject.transform.position;
     }
 
     private void updateScreenSizeInfo()
@@ -25,11 +26,16 @@ public class CannonballController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         updateScreenSizeInfo();
         //if (transform.position.x < -8 || transform.position.x > 8.5 || transform.position.y < -5.5) {
         if (transform.position.x < -0.5f * screenWidthUnits || transform.position.x > 0.5f * screenWidthUnits || transform.position.y < -0.5f * screenHeightUnits) {
             Destroy(gameObject);
         }
+
+        if (lastPosition != null && lastPosition.Equals(gameObject.transform.position)){
+            Destroy(gameObject);
+        }
+
+        lastPosition = gameObject.transform.position;
     }
 }
