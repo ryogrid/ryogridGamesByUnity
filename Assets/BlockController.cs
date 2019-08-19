@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlockController : MonoBehaviour
 {
-    private const float TAIKYUDO_MAX = 25f;
+    private const float TAIKYUDO_MAX = 20f;
     private const float CANONBALL_MASS = 1f;
     private float taikyudo = TAIKYUDO_MAX;
 
@@ -33,13 +33,12 @@ public class BlockController : MonoBehaviour
         gameObject.GetComponent<Renderer>().material.color = color;
 
         //Debug.Log(recv_force);
-
-        //gameObject.GetComponent<Collider2D>().isTrigger = true;
-        //gameObject.GetComponent<Rigidbody2D>().simulated = false;
         //Destroy(gameObject);
 
         if (taikyudo <= 0)
         {
+            Rigidbody2D ball = other.gameObject.GetComponent<Rigidbody2D>();
+            ball.velocity = new Vector2(vx * 0.7f, vy * 0.7f);
             Destroy(gameObject);
         }
     }

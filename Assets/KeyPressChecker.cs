@@ -13,8 +13,8 @@ public class KeyPressChecker : MonoBehaviour
 
     private int shotPower1P = 400;
     private int shotPower2P = 400;
-    private int shotAngle1P = 0;
-    private int shotAngle2P = 0;
+    private int shotAngle1P = 45;
+    private int shotAngle2P = 45;
 
     private GameObject createdMato1P = null;
     private GameObject createdMato2P = null;
@@ -77,9 +77,10 @@ public class KeyPressChecker : MonoBehaviour
         createdPole1P = Instantiate(CannonPolePrefab, new Vector3(-0.499f * screenWidthUnits, -0.499f * screenHeightUnits, 0), Quaternion.identity);
         createdPole2P = Instantiate(CannonPolePrefab, new Vector3(0.499f * screenWidthUnits, -0.499f * screenHeightUnits, 0), Quaternion.identity);
         //createdPole2P.transform.Rotate(new Vector3(0f, 0f, 180f));
-        iTween.RotateTo(createdPole2P, iTween.Hash("z", 180f));
-        shotAngle1P = 0;
-        shotAngle2P = 0;
+        iTween.RotateTo(createdPole2P, iTween.Hash("z", 135f));
+        iTween.RotateTo(createdPole1P, iTween.Hash("z", 45f));
+        shotAngle1P = 45;
+        shotAngle2P = 45;
 
         //画面上の障害物を全て消す
         var clones = GameObject.FindGameObjectsWithTag("block");
