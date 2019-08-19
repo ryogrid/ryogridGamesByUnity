@@ -26,6 +26,11 @@ public class BlockController : MonoBehaviour
         float vx = other.relativeVelocity.x;
         float vy = other.relativeVelocity.y;
         float recv_force = Mathf.Sqrt(vx * vx + vy * vy);
+
+        Rigidbody2D ball = other.gameObject.GetComponent<Rigidbody2D>();
+        float slowDownRatio = (recv_force - taikyudo) / recv_force;
+        ball.velocity = new Vector2(vx * slowDownRatio, vy * slowDownRatio);
+
         taikyudo -= recv_force;
 
         Color color = gameObject.GetComponent<Renderer>().material.color;
@@ -37,8 +42,6 @@ public class BlockController : MonoBehaviour
 
         if (taikyudo <= 0)
         {
-            Rigidbody2D ball = other.gameObject.GetComponent<Rigidbody2D>();
-            ball.velocity = new Vector2(vx * 0.7f, vy * 0.7f);
             Destroy(gameObject);
         }
     }
