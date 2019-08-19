@@ -11,6 +11,7 @@ public class CannonballController : MonoBehaviour
     private Vector2 lastVelocity;
     private Rigidbody2D rb;
     private Vector3 lastPosition;
+    private int counter = 0;
 
     void Start()
     {
@@ -32,7 +33,9 @@ public class CannonballController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (lastPosition != null && lastPosition.Equals(gameObject.transform.position)){
+        counter += 1;
+
+        if (lastPosition != null && counter % 3 == 0 && lastPosition.Equals(gameObject.transform.position)){
             Destroy(gameObject);
         }
 
