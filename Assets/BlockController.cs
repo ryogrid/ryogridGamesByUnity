@@ -8,10 +8,13 @@ public class BlockController : MonoBehaviour
     private const float CANONBALL_MASS = 1f;
     private float taikyudo = TAIKYUDO_MAX;
 
+    private AudioSource audioSource;
+    public AudioClip audioBreak;
+
     // Start is called before the first frame update
     void Start()
     {
-        //taikyudo = TAIKYUDO_MAX;
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -43,7 +46,17 @@ public class BlockController : MonoBehaviour
 
         if (taikyudo <= 0)
         {
-            Destroy(gameObject);
+            //audioSource = gameObject.GetComponent<AudioSource>();
+            //audioSource.PlayOneShot(audioBreak);
+            audioSource.PlayOneShot(audioBreak);
+            StartCoroutine("DelayedDestroy");
+            //Destroy(gameObject);
         }
+    }
+
+    IEnumerator DelayedDestroy(){
+ 
+        yield return new WaitForSeconds(5);  //wait 5sec
+        Destroy(gameObject);
     }
 }
