@@ -224,6 +224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 128722260}
   - component: {fileID: 128722261}
+  - component: {fileID: 128722262}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -265,6 +266,15 @@ MonoBehaviour:
     type: 3}
   CannonPolePrefab: {fileID: 2822484640313464517, guid: b43c52efe42cbe1438410b03ea57a02d,
     type: 3}
+  audioShot: {fileID: 8300000, guid: 06f2d06ef82099d439fb853ac37ed302, type: 3}
+--- !u!81 &128722262
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128722259}
+  m_Enabled: 1
 --- !u!1 &442071965
 GameObject:
   m_ObjectHideFlags: 0

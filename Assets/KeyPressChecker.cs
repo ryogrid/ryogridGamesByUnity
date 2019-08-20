@@ -11,6 +11,8 @@ public class KeyPressChecker : MonoBehaviour
     public GameObject BlockPrefab;
     public GameObject CannonPolePrefab;
 
+    public AudioClip audioShot;
+
     private int shotPower1P = 400;
     private int shotPower2P = 400;
     private int shotAngle1P = 45;
@@ -38,9 +40,13 @@ public class KeyPressChecker : MonoBehaviour
 
     private const bool IS_MOUNTAIN = false;
 
+    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = gameObject.GetComponent<AudioSource>();
+
         ShotParamText1P = GameObject.Find("ShotParamText1P");
         ShotParamText2P = GameObject.Find("ShotParamText2P");
         MessageText = GameObject.Find("MessageText");
@@ -245,5 +251,7 @@ public class KeyPressChecker : MonoBehaviour
             createdCannonball.GetComponent<Rigidbody2D>().AddForce(new Vector2(x_power, y_power));
         }
         isTurnOfP1 = !isTurnOfP1;
+
+        audioSource.PlayOneShot(audioShot);
     }
 }
