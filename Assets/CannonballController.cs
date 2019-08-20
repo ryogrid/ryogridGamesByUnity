@@ -35,10 +35,13 @@ public class CannonballController : MonoBehaviour
 
         counter += 1;
 
-        if (lastPosition != null && counter % 3 == 0 && lastPosition.Equals(gameObject.transform.position)){
-            Destroy(gameObject);
+        if((lastPosition == null || counter % 11 == 0))
+        {
+            lastPosition = gameObject.transform.position;
         }
 
-        lastPosition = gameObject.transform.position;
+        if (counter % 17 == 0 && lastPosition.x == gameObject.transform.position.x &&  lastPosition.y == gameObject.transform.position.y){
+            Destroy(gameObject);
+        }
     }
 }

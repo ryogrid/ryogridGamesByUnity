@@ -56,7 +56,7 @@ public class BlockController : MonoBehaviour
 
     IEnumerator DelayedDestroy(){
  
-        yield return new WaitForSeconds(5);  //wait 5sec
+        yield return new WaitForSeconds(1f);  //wait 5sec
         Destroy(gameObject);
     }
 }
