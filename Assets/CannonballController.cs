@@ -16,6 +16,7 @@ public class CannonballController : MonoBehaviour
     void Start()
     {
         //lastPositioin = gameObject.transform.position;
+        this.rb = this.GetComponent<Rigidbody2D>();
     }
 
     private void updateScreenSizeInfo()
@@ -40,7 +41,7 @@ public class CannonballController : MonoBehaviour
             lastPosition = gameObject.transform.position;
         }
 
-        if (counter % 17 == 0 && lastPosition.x == gameObject.transform.position.x &&  lastPosition.y == gameObject.transform.position.y){
+        if (counter % 17 == 0 && lastPosition.x == gameObject.transform.position.x &&  lastPosition.y == gameObject.transform.position.y && this.rb.velocity.x == 0 && this.rb.velocity.x == 0){
             Destroy(gameObject);
         }
     }
