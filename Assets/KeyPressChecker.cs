@@ -10,6 +10,7 @@ public class KeyPressChecker : MonoBehaviour
     public GameObject MatoPrefab;
     public GameObject BlockPrefab;
     public GameObject CannonPolePrefab;
+    public GameObject WallPrefab;
 
     public AudioClip audioShot;
 
@@ -51,6 +52,10 @@ public class KeyPressChecker : MonoBehaviour
         ShotParamText2P = GameObject.Find("ShotParamText2P");
         MessageText = GameObject.Find("MessageText");
         updateScreenSizeInfo();
+
+        GameObject createdWall = Instantiate(WallPrefab, new Vector3(0, -0.25f * screenHeightUnits, 0), Quaternion.identity);
+        createdWall.transform.localScale = new Vector3(0.1f, screenHeightUnits * 0.6f, 1);
+
         InvokeRepeating("checkKeyPress", CHECK_INTERVAL, CHECK_INTERVAL);
         placeMato();
     }

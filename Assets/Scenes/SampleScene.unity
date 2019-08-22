@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 128722262}
   - component: {fileID: 128722263}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: WorldController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -266,6 +266,8 @@ MonoBehaviour:
   BlockPrefab: {fileID: 3342907419853016781, guid: 3a3c17a9e8fc471438902a6daed15a5e,
     type: 3}
   CannonPolePrefab: {fileID: 2822484640313464517, guid: b43c52efe42cbe1438410b03ea57a02d,
+    type: 3}
+  WallPrefab: {fileID: 3593017880809940032, guid: 2fcf9d7e4c019154d9acac701aa2fc65,
     type: 3}
   audioShot: {fileID: 8300000, guid: 06f2d06ef82099d439fb853ac37ed302, type: 3}
 --- !u!81 &128722262
