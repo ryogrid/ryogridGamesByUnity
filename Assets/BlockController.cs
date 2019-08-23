@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlockController : MonoBehaviour
 {
-    private const float TAIKYUDO_MAX = 10f;
+    private const float TAIKYUDO_MAX = 6f;
     private const float CANONBALL_MASS = 1f;
     private float taikyudo = TAIKYUDO_MAX;
 
@@ -14,7 +14,7 @@ public class BlockController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = gameObject.GetComponent<AudioSource>();
+        //audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -25,7 +25,6 @@ public class BlockController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        //Debug.Log(other.relativeVelocity);
         float vx = other.relativeVelocity.x;
         float vy = other.relativeVelocity.y;
         float recv_force = Mathf.Sqrt(vx * vx + vy * vy);
@@ -40,24 +39,24 @@ public class BlockController : MonoBehaviour
 
         Color color = gameObject.GetComponent<Renderer>().material.color;
         color.a = (taikyudo / TAIKYUDO_MAX);
+        if(color.a < 0.2)
+        {
+            color.a = 0.2f;
+        }
         gameObject.GetComponent<Renderer>().material.color = color;
-
-        //Debug.Log(recv_force);
-        //Destroy(gameObject);
 
         if (taikyudo <= 0)
         {
-            //audioSource = gameObject.GetComponent<AudioSource>();
-            //audioSource.PlayOneShot(audioBreak);
+            audioSource = other.gameObject.GetComponent<AudioSource>();
             audioSource.PlayOneShot(audioBreak);
-            StartCoroutine("DelayedDestroy");
-            //Destroy(gameObject);
+            //StartCoroutine("DelayedDestroy");
+            Destroy(gameObject);
         }
     }
 
     IEnumerator DelayedDestroy(){
  
-        yield return new WaitForSeconds(1f);  //wait 5sec
+        yield return new WaitForSeconds(1f);  //wait 1sec
         Destroy(gameObject);
     }
 }
