@@ -6,11 +6,18 @@ public class KeyCheckerControler : MonoBehaviour
 {
 
     public GameObject BallPrefab;
+    public GameObject RacketPrefab;
+
+    private GameObject createdBall = null;
+    private GameObject createdRacket = null;
     private const float CHECK_INTERVAL = 0.01f;
+    private const float MOVE_DISTANCE = 2f;
 
     // Start is called before the first frame update
     void Start()
     {
+        createdRacket = Instantiate(RacketPrefab, new Vector3(0, 0, -2f), Quaternion.identity);
+        createdRacket.GetComponent<Renderer>().material.color = Color.blue;
         InvokeRepeating("checkKeyPress", CHECK_INTERVAL, CHECK_INTERVAL);        
     }
 
@@ -22,76 +29,30 @@ public class KeyCheckerControler : MonoBehaviour
 
     void checkKeyPress()
     {
+
+        //updateScreenSizeInfo();
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            //createdRacket.transform.position += new Vector3 (0, MOVE_DISTANCE, 0);
+            iTween.MoveBy(createdRacket, iTween.Hash("y", MOVE_DISTANCE));
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            //createdRacket.transform.position += new Vector3 (0, -1 * MOVE_DISTANCE, 0);
+            iTween.MoveBy(createdRacket, iTween.Hash("y", -1 * MOVE_DISTANCE));
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            //createdRacket.transform.position += new Vector3 (-1f * MOVE_DISTANCE, 0, 0);
+            iTween.MoveBy(createdRacket, iTween.Hash("x", -1 * MOVE_DISTANCE));
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            //createdRacket.transform.position += new Vector3 (MOVE_DISTANCE, 0, 0);
+            iTween.MoveBy(createdRacket, iTween.Hash("x", MOVE_DISTANCE));
+        }
+
 /*
-        updateScreenSizeInfo();
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            if (isTurnOfP1)
-            {
-                if (shotAngle1P < 90)
-                {
-                    shotAngle1P += 1;
-                    //createdPole1P.transform.Rotate(new Vector3(0f, 0f, 1f));
-                    iTween.RotateTo(createdPole1P, iTween.Hash("z", shotAngle1P));
-                }
-            }
-            else
-            {
-                if (shotAngle2P < 90)
-                {
-                    shotAngle2P += 1;
-                    //createdPole2P.transform.Rotate(new Vector3(0f, 0f, -1f));
-                    iTween.RotateTo(createdPole2P, iTween.Hash("z", 180f - shotAngle2P));
-                }
-            }
-
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if (isTurnOfP1)
-            {
-                if (shotAngle1P > 0)
-                {
-                    shotAngle1P -= 1;
-                    //createdPole1P.transform.Rotate(new Vector3(0f, 0f, -1f));
-                    iTween.RotateTo(createdPole1P, iTween.Hash("z", shotAngle1P));
-                }
-            }
-            else
-            {
-                if (shotAngle2P > 0)
-                {
-                    shotAngle2P -= 1;
-                    //createdPole1P.transform.Rotate(new Vector3(0f, 0f, 1f));
-                    iTween.RotateTo(createdPole2P, iTween.Hash("z", 180f - shotAngle2P));
-                }
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if (isTurnOfP1)
-            {
-                if (shotPower1P < 1000) shotPower1P += 10;
-            }
-            else
-            {
-                if (shotPower2P < 1000) shotPower2P += 10;
-            }
-
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (isTurnOfP1)
-            {
-                if (shotPower1P > 0) shotPower1P -= 10;
-            }
-            else
-            {
-                if (shotPower2P > 0) shotPower2P -= 10;
-            }
-
-        }
-
         //一定間隔で定期的にクリアする
         msgTimeCounter += CHECK_INTERVAL;
         if (msgTimeCounter > 3f)
@@ -120,14 +81,20 @@ public class KeyCheckerControler : MonoBehaviour
 
     void shotNewBall()
     {
-        GameObject createdBall = Instantiate(BallPrefab, new Vector3(0, 0, -2), Quaternion.identity);
+        if (createdBall != null)
+        {
+            return;
+        }
+        createdBall = Instantiate(BallPrefab, new Vector3(0, 0, -1.8f), Quaternion.identity);
         //createdCannonball = Instantiate(CannonballPrefab, new Vector3(-8f, -4.5f, 0), Quaternion.identity);
-        float shotPowerXY = 100f;
-        float shotPowerFixedZ = 20;
-        float shotAngle = Random.Range(0f, 150f);
-        float x_power = 1 * 2 * Mathf.Cos(Mathf.PI * ((shotAngle + 20) / 180f)) * shotPowerXY;
-        float y_power = 2f * Mathf.Sin(Mathf.PI  * ((shotAngle + 20) / 180f)) * shotPowerXY;
+        float shotPowerXY = 90f;
+        float shotPowerFixedZ = 80;
+        float shotAngle = Random.Range(0f, 360f);
+        float x_power = Mathf.Cos(2 * Mathf.PI * (shotAngle / 360f)) * shotPowerXY;
+        float y_power = Mathf.Sin(2 * Mathf.PI  * (shotAngle / 360f)) * shotPowerXY;
 
-        createdBall.GetComponent<Rigidbody2D>().AddForce(new Vector3(x_power, y_power, shotPowerFixedZ));
+        createdBall.GetComponent<Renderer>().material.color = Color.black;
+        createdBall.GetComponent<Rigidbody>().AddForce(new Vector3(x_power, y_power, shotPowerFixedZ));
+        createdBall.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, shotPowerFixedZ));
     }
 }
