@@ -17,7 +17,7 @@ public class KeyCheckerControler : MonoBehaviour
     void Start()
     {
         createdRacket = Instantiate(RacketPrefab, new Vector3(0, 0, -2f), Quaternion.identity);
-        createdRacket.GetComponent<Renderer>().material.color = Color.blue;
+        //createdRacket.GetComponent<Renderer>().material.color = Color.blue;
         InvokeRepeating("checkKeyPress", CHECK_INTERVAL, CHECK_INTERVAL);        
     }
 

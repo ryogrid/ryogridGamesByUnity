@@ -12,7 +12,7 @@ public class BallController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-         rb = this.GetComponent<Rigidbody>();       
+         rb = this.GetComponent<Rigidbody>();    
     }
 
     //一定秒数ごとに呼び出される. デフォルトは20ms間隔らしい
