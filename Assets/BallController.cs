@@ -45,7 +45,7 @@ public class BallController : MonoBehaviour
     void OnCollisionEnter(Collision coll)
     {
         Vector3 refrectVec = Vector3.Reflect(this.lastVelocity, coll.contacts[0].normal);
-        Debug.Log(refrectVec);
+        //Debug.Log(refrectVec);
         rb.velocity = refrectVec;
     }
 

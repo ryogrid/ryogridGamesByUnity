@@ -85,7 +85,7 @@ public class KeyCheckerControler : MonoBehaviour
         {
             return;
         }
-        createdBall = Instantiate(BallPrefab, new Vector3(0, 0, -1.8f), Quaternion.identity);
+        createdBall = Instantiate(BallPrefab, new Vector3(0, 0, -1.5f), Quaternion.identity);
         //createdCannonball = Instantiate(CannonballPrefab, new Vector3(-8f, -4.5f, 0), Quaternion.identity);
         float shotPowerXY = 90f;
         float shotPowerFixedZ = 80;
