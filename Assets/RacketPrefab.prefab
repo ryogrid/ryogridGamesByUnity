@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8602701863706257734}
   - component: {fileID: 8602701863706257735}
   - component: {fileID: 1999348101552151025}
-  - component: {fileID: 1066625963680984937}
   m_Layer: 0
   m_Name: RacketPrefab
   m_TagString: Untagged
@@ -105,19 +104,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed36c5de353574844b5cb030c99995d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &1066625963680984937
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8602701863706257784}
-  serializedVersion: 2
-  m_Mass: 100
-  m_Drag: 0
-  m_AngularDrag: 100
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0

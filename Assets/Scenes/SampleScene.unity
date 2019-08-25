@@ -284,7 +284,6 @@ GameObject:
   - component: {fileID: 456826696}
   - component: {fileID: 456826695}
   - component: {fileID: 456826694}
-  - component: {fileID: 456826698}
   m_Layer: 0
   m_Name: MainWall
   m_TagString: Untagged
@@ -364,22 +363,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &456826698
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 456826693}
-  serializedVersion: 2
-  m_Mass: 100
-  m_Drag: 0
-  m_AngularDrag: 100
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 3
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
