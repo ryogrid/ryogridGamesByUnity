@@ -6,6 +6,8 @@ public class BallController : MonoBehaviour
 {
     private Rigidbody rb;
     private GameObject BallZLine;
+    private GameObject BallZLineHorizontal;
+    private GameObject BallZLineVertical;
     private Vector3 lastVelocity;
     private Vector3 lastPosition;
     private int counter = 0;
@@ -15,7 +17,8 @@ public class BallController : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody>();
         BallZLine = GameObject.Find("BallZLine");
-
+        BallZLineHorizontal = GameObject.Find("BallZLineHorizontal");
+        BallZLineVertical = GameObject.Find("BallZLineVertical");
     }
 
     //一定秒数ごとに呼び出される. デフォルトは20ms間隔らしい
@@ -24,11 +27,15 @@ public class BallController : MonoBehaviour
         lastVelocity = rb.velocity;
         //iTween.MoveTo(BallZLine, iTween.Hash("x", this.transform.position.x, "y", this.transform.position.y));
         BallZLine.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
+        BallZLineHorizontal.transform.position = new Vector3(0, this.transform.position.y, this.transform.position.z);
+        BallZLineVertical.transform.position = new Vector3(this.transform.position.x, 0, this.transform.position.z);
     }
 
     private void resetBallZLine()
     {
         BallZLine.transform.position = new Vector3(0, 0, 0);
+        BallZLineHorizontal.transform.position = new Vector3(0, 0, 0);
+        BallZLineVertical.transform.position = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame

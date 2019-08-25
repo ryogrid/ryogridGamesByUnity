@@ -12,6 +12,9 @@ public class KeyCheckerControler : MonoBehaviour
 
     private GameObject createdBall = null;
     private GameObject createdRacket = null;
+    private GameObject RacketZLineHorizontal = null;
+    private GameObject RacketZLineVertical = null;
+
     private const float CHECK_INTERVAL = 0.01f;
     private const float MOVE_DISTANCE = 2f;
 
@@ -22,6 +25,9 @@ public class KeyCheckerControler : MonoBehaviour
         
         ScoreText = GameObject.Find("ScoreMeshText");
         ScoreText.GetComponent<TextMesh>().text = "0 回";
+
+        RacketZLineHorizontal = GameObject.Find("RacketZLineHorizontal");
+        RacketZLineVertical = GameObject.Find("RacketZLineVertical");
 
         //createdRacket.GetComponent<Renderer>().material.color = Color.blue;
         InvokeRepeating("checkKeyPress", CHECK_INTERVAL, CHECK_INTERVAL);        
@@ -83,6 +89,9 @@ public class KeyCheckerControler : MonoBehaviour
         {
             shotNewBall();
         }
+
+        RacketZLineHorizontal.transform.position = new Vector3(0, createdRacket.transform.position.y, createdRacket.transform.position.z);
+        RacketZLineVertical.transform.position = new Vector3(createdRacket.transform.position.x, 0, createdRacket.transform.position.z);
     }
 
     private void reCreateRacket()
