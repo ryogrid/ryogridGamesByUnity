@@ -19,11 +19,7 @@ public class KeyCheckerControler : MonoBehaviour
     void Start()
     {
         createdRacket = Instantiate(RacketPrefab, new Vector3(0, 0, -2f), Quaternion.identity);
-
         
-        //ScoreText.transform.position = new Vector3(-1f, 1f, -2.5f);
-        //iTween.MoveBy(ScoreText, iTween.Hash("x", 0F, "y", 0f, "z", -300f));
-
         ScoreText = GameObject.Find("ScoreMeshText");
         ScoreText.GetComponent<TextMesh>().text = "0 回";
 
@@ -106,5 +102,7 @@ public class KeyCheckerControler : MonoBehaviour
         createdBall.GetComponent<Renderer>().material.color = Color.black;
         createdBall.GetComponent<Rigidbody>().AddForce(new Vector3(x_power, y_power, shotPowerFixedZ));
         createdBall.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, shotPowerFixedZ));
+
+        ScoreText.GetComponent<TextMesh>().text = "0 回";
     }
 }
