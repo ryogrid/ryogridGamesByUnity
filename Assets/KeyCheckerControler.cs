@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class KeyCheckerControler : MonoBehaviour
 {
 
     public GameObject BallPrefab;
     public GameObject RacketPrefab;
+    private GameObject ScoreText;
 
     private GameObject createdBall = null;
     private GameObject createdRacket = null;
@@ -17,6 +19,14 @@ public class KeyCheckerControler : MonoBehaviour
     void Start()
     {
         createdRacket = Instantiate(RacketPrefab, new Vector3(0, 0, -2f), Quaternion.identity);
+
+        
+        //ScoreText.transform.position = new Vector3(-1f, 1f, -2.5f);
+        //iTween.MoveBy(ScoreText, iTween.Hash("x", 0F, "y", 0f, "z", -300f));
+
+        ScoreText = GameObject.Find("ScoreMeshText");
+        ScoreText.GetComponent<TextMesh>().text = "0 回";
+
         //createdRacket.GetComponent<Renderer>().material.color = Color.blue;
         InvokeRepeating("checkKeyPress", CHECK_INTERVAL, CHECK_INTERVAL);        
     }
