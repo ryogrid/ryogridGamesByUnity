@@ -85,6 +85,16 @@ public class KeyCheckerControler : MonoBehaviour
         }
     }
 
+    private void reCreateRacket()
+    {
+        if(createdRacket != null)
+        {
+            Destroy(createdRacket);
+            createdRacket = null;            
+        }
+        createdRacket = Instantiate(RacketPrefab, new Vector3(0, 0, -2f), Quaternion.identity);
+    }
+
     void shotNewBall()
     {
         if (createdBall != null)
@@ -104,5 +114,7 @@ public class KeyCheckerControler : MonoBehaviour
         createdBall.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, shotPowerFixedZ));
 
         ScoreText.GetComponent<TextMesh>().text = "0 回";
+        //内部状態を初期化するために作り直す
+        reCreateRacket();
     }
 }
