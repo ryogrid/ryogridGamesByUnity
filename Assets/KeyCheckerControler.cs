@@ -112,8 +112,8 @@ public class KeyCheckerControler : MonoBehaviour
         }
         createdBall = Instantiate(BallPrefab, new Vector3(0, 0, -1.5f), Quaternion.identity);
         //createdCannonball = Instantiate(CannonballPrefab, new Vector3(-8f, -4.5f, 0), Quaternion.identity);
-        float shotPowerXY = 90f;
-        float shotPowerFixedZ = 80;
+        float shotPowerXY = 60f;
+        float shotPowerFixedZ = 60f;
         float shotAngle = Random.Range(0f, 360f);
         float x_power = Mathf.Cos(2 * Mathf.PI * (shotAngle / 360f)) * shotPowerXY;
         float y_power = Mathf.Sin(2 * Mathf.PI  * (shotAngle / 360f)) * shotPowerXY;
