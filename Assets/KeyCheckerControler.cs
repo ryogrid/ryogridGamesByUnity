@@ -16,7 +16,8 @@ public class KeyCheckerControler : MonoBehaviour
     private GameObject RacketZLineVertical = null;
 
     private const float CHECK_INTERVAL = 0.01f;
-    private const float MOVE_DISTANCE = 2f;
+    //private const float MOVE_DISTANCE = 2f;
+    private const float MOVE_DISTANCE = 0.05f;
 
     // Start is called before the first frame update
     void Start()
@@ -45,23 +46,23 @@ public class KeyCheckerControler : MonoBehaviour
         //updateScreenSizeInfo();
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            //createdRacket.transform.position += new Vector3 (0, MOVE_DISTANCE, 0);
-            iTween.MoveBy(createdRacket, iTween.Hash("y", MOVE_DISTANCE));
+            createdRacket.transform.position = new Vector3 (createdRacket.transform.position.x, createdRacket.transform.position.y + MOVE_DISTANCE, createdRacket.transform.position.z);
+            //iTween.MoveBy(createdRacket, iTween.Hash("y", MOVE_DISTANCE));
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            //createdRacket.transform.position += new Vector3 (0, -1 * MOVE_DISTANCE, 0);
-            iTween.MoveBy(createdRacket, iTween.Hash("y", -1 * MOVE_DISTANCE));
+            createdRacket.transform.position = new Vector3 (createdRacket.transform.position.x, createdRacket.transform.position.y - MOVE_DISTANCE, createdRacket.transform.position.z);
+            //iTween.MoveBy(createdRacket, iTween.Hash("y", -1 * MOVE_DISTANCE));
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            //createdRacket.transform.position += new Vector3 (-1f * MOVE_DISTANCE, 0, 0);
-            iTween.MoveBy(createdRacket, iTween.Hash("x", -1 * MOVE_DISTANCE));
+            createdRacket.transform.position = new Vector3 (createdRacket.transform.position.x - MOVE_DISTANCE, createdRacket.transform.position.y, createdRacket.transform.position.z);
+            //iTween.MoveBy(createdRacket, iTween.Hash("x", -1 * MOVE_DISTANCE));
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            //createdRacket.transform.position += new Vector3 (MOVE_DISTANCE, 0, 0);
-            iTween.MoveBy(createdRacket, iTween.Hash("x", MOVE_DISTANCE));
+            createdRacket.transform.position = new Vector3 (createdRacket.transform.position.x + MOVE_DISTANCE, createdRacket.transform.position.y, createdRacket.transform.position.z);
+            //iTween.MoveBy(createdRacket, iTween.Hash("x", MOVE_DISTANCE));
         }
 
 /*
