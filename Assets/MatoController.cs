@@ -42,16 +42,25 @@ public class MatoController : MonoBehaviour
         }
 
         GameObject MessageText = GameObject.Find("MessageText");
-        if(gameObject.transform.position.x < 0f && !isTurn1P)
+        if (WorldController.is1PlayerMode)
         {
-            MessageText.GetComponent<Text>().text = "2Pの勝利!!!";
+            MessageText.GetComponent<Text>().text = "お見事!";
             Destroy(gameObject);
         }
-        else if(gameObject.transform.position.x > 0f && isTurn1P)
+        else
         {
-            MessageText.GetComponent<Text>().text = "1Pの勝利!!!";
-            Destroy(gameObject);
+            if (gameObject.transform.position.x < 0f && !isTurn1P)
+            {
+                MessageText.GetComponent<Text>().text = "2Pの勝利!!!";
+                Destroy(gameObject);
+            }
+            else if(gameObject.transform.position.x > 0f && isTurn1P)
+            {
+                MessageText.GetComponent<Text>().text = "1Pの勝利!!!";
+                Destroy(gameObject);
+            }
         }
+
 
         //Instantiate(MatoPrefab, new Vector3(Random.Range(-7f, 7f), Random.Range(-4f, 4f), 0), Quaternion.identity);
         //Instantiate(gameObject, new Vector3(Random.Range(-7f, 7f), Random.Range(-4f, 4f), 0), Quaternion.identity);

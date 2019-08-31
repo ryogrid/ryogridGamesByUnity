@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class KeyPressChecker : MonoBehaviour
+public class WorldController : MonoBehaviour
 {
+    /// <summary>
+    /// global static flags
+    /// </summary>
+    public static bool is1PlayerMode = false; 
+
 
     public GameObject CannonballPrefab;
     public GameObject MatoPrefab;
@@ -83,15 +88,19 @@ public class KeyPressChecker : MonoBehaviour
             createdPole2P = null;
         }
 
-        createdMato1P = Instantiate(MatoPrefab, new Vector3(-0.499f * screenWidthUnits, -0.35f * screenHeightUnits, 0), Quaternion.identity);
         createdMato2P = Instantiate(MatoPrefab, new Vector3(0.499f * screenWidthUnits, -0.35f * screenHeightUnits, 0), Quaternion.identity);
         createdPole1P = Instantiate(CannonPolePrefab, new Vector3(-0.499f * screenWidthUnits, -0.499f * screenHeightUnits, 0), Quaternion.identity);
-        createdPole2P = Instantiate(CannonPolePrefab, new Vector3(0.499f * screenWidthUnits, -0.499f * screenHeightUnits, 0), Quaternion.identity);
-        //createdPole2P.transform.Rotate(new Vector3(0f, 0f, 180f));
-        iTween.RotateTo(createdPole2P, iTween.Hash("z", 135f));
         iTween.RotateTo(createdPole1P, iTween.Hash("z", 45f));
         shotAngle1P = 45;
-        shotAngle2P = 45;
+
+        if(WorldController.is1PlayerMode == false)
+        {
+            createdMato1P = Instantiate(MatoPrefab, new Vector3(-0.499f * screenWidthUnits, -0.35f * screenHeightUnits, 0), Quaternion.identity);
+            createdPole2P = Instantiate(CannonPolePrefab, new Vector3(0.499f * screenWidthUnits, -0.499f * screenHeightUnits, 0), Quaternion.identity);
+            //createdPole2P.transform.Rotate(new Vector3(0f, 0f, 180f));
+            iTween.RotateTo(createdPole2P, iTween.Hash("z", 135f));
+            shotAngle2P = 45;
+        }
 
         //画面上の障害物を全て消す
         var clones = GameObject.FindGameObjectsWithTag("block");
@@ -138,6 +147,18 @@ public class KeyPressChecker : MonoBehaviour
     void checkKeyPress()
     {
         updateScreenSizeInfo();
+
+ 		if (Input.GetKeyDown (KeyCode.Alpha1)) { // 1キーが押されたら 1Playerモードと2Playerモードをトグルする
+            WorldController.is1PlayerMode = !WorldController.is1PlayerMode;
+            if (WorldController.is1PlayerMode)
+            {
+                isTurnOfP1 = true;
+            }
+            // 砲台、ブロック、的をよろしく更新する
+            placeMato();
+            return;
+		}
+
  		if (Input.GetKeyDown (KeyCode.UpArrow)) {
             if (isTurnOfP1)
             {
@@ -201,6 +222,7 @@ public class KeyPressChecker : MonoBehaviour
             }
 
 		}
+
 /*
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -218,7 +240,7 @@ public class KeyPressChecker : MonoBehaviour
         }
 
         //的がユーザのプレイで消滅していたら再生成する
-        if(createdMato1P == null)
+        if(createdMato1P == null && WorldController.is1PlayerMode == false)
         {
             placeMato();
         }
@@ -226,8 +248,17 @@ public class KeyPressChecker : MonoBehaviour
         {
             placeMato();
         }
+
         ShotParamText1P.GetComponent<Text>().text = (isTurnOfP1? "@ ":"") + "Power: " + shotPower1P.ToString() + " Angle: " + shotAngle1P.ToString();
-        ShotParamText2P.GetComponent<Text>().text = (!isTurnOfP1 ? "@ ":"") + "Power: " + shotPower2P.ToString() + " Angle: " + shotAngle2P.ToString();
+
+        if(WorldController.is1PlayerMode == false)
+        {
+            ShotParamText2P.GetComponent<Text>().text = (!isTurnOfP1 ? "@ " : "") + "Power: " + shotPower2P.ToString() + " Angle: " + shotAngle2P.ToString();
+        }
+        else
+        {
+            ShotParamText2P.GetComponent<Text>().text = "";
+        }
 
  		if (Input.GetKeyDown(KeyCode.Space)) {
             shotNewCannonbool();
@@ -256,7 +287,10 @@ public class KeyPressChecker : MonoBehaviour
             float y_power = 2f * Mathf.Sin((Mathf.PI / 2f) * (shotAngle2P / 90f)) * shotPower2P;
             createdCannonball.GetComponent<Rigidbody2D>().AddForce(new Vector2(x_power, y_power));
         }
-        isTurnOfP1 = !isTurnOfP1;
+        if(WorldController.is1PlayerMode == false)
+        {
+            isTurnOfP1 = !isTurnOfP1;
+        }
 
         audioSource.PlayOneShot(audioShot);
     }
