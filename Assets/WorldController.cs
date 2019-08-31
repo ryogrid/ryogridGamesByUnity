@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class KeyPressChecker : MonoBehaviour
+public class WorldController : MonoBehaviour
 {
 
     public GameObject CannonballPrefab;
