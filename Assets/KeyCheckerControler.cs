@@ -18,6 +18,7 @@ public class KeyCheckerControler : MonoBehaviour
     private const float CHECK_INTERVAL = 0.01f;
     //private const float MOVE_DISTANCE = 2f;
     private const float MOVE_DISTANCE = 0.05f;
+    private const float PIXCELS_OF_UNIT = 100f;
 
     // Start is called before the first frame update
     void Start()
@@ -40,9 +41,19 @@ public class KeyCheckerControler : MonoBehaviour
         
     }
 
+    float getConvertedMouseCoodX()
+    {
+        return ((Input.mousePosition.x / Screen.width) * 5f - 2.5f) * 1.3f;
+    }
+
+    float getConvertedMouseCoodY()
+    {
+        return (Input.mousePosition.y / Screen.height) * 5f - 2.5f;
+    }
+
     void checkKeyPress()
     {
-
+/*
         //updateScreenSizeInfo();
         if (Input.GetKey(KeyCode.UpArrow))
         {
@@ -64,6 +75,9 @@ public class KeyCheckerControler : MonoBehaviour
             createdRacket.transform.position = new Vector3 (createdRacket.transform.position.x + MOVE_DISTANCE, createdRacket.transform.position.y, createdRacket.transform.position.z);
             //iTween.MoveBy(createdRacket, iTween.Hash("x", MOVE_DISTANCE));
         }
+*/
+
+        createdRacket.transform.position = new Vector3 (getConvertedMouseCoodX(), getConvertedMouseCoodY(), createdRacket.transform.position.z);
 
 /*
         //一定間隔で定期的にクリアする
