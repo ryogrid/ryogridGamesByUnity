@@ -16,6 +16,8 @@ public class BallController : MonoBehaviour
     private const float XY_VELOCITY_LATIO_UPPER = 1f;
     private const float XY_VELOCITY_LATIO_BOTTOM = 0.2f;
 
+    private AudioSource audioSource;
+    public AudioClip audioBound;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,7 @@ public class BallController : MonoBehaviour
         BallZLine = GameObject.Find("BallZLine");
         BallZLineHorizontal = GameObject.Find("BallZLineHorizontal");
         BallZLineVertical = GameObject.Find("BallZLineVertical");
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     //一定秒数ごとに呼び出される. デフォルトは20ms間隔らしい
@@ -127,6 +130,7 @@ public class BallController : MonoBehaviour
         refrectVec.y *= 1.01f;
         refrectVec.z *= 1.01f;
         rb.velocity = refrectVec;
+        audioSource.PlayOneShot(audioBound);
     }
 
 }
