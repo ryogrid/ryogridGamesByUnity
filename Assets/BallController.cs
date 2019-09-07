@@ -12,7 +12,8 @@ public class BallController : MonoBehaviour
     private Vector3 lastPosition;
     private int counter = 0;
 
-    private const float Z_CONSTANT_VELOCITY = 2.5f;
+    public static  float Z_CONSTANT_VELOCITY = 2.5f;
+    private const float Z_CONSTANT_HALF_VELOCITY = 1.25f;
     private const float Z_STRANGE_VELOCITY_THRESHOLD = 0.1f;
     private const float XY_VELOCITY_LATIO_UPPER = 1f;
     private const float XY_VELOCITY_LATIO_BOTTOM = 0.2f;
@@ -20,9 +21,12 @@ public class BallController : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip audioBound;
 
+    private const int COUNTER_ADJUST_THRESHOLD = 5;
+
     // Start is called before the first frame update
     void Start()
     {
+        lastVelocity = new Vector3(0, 0, 0);
         rb = this.GetComponent<Rigidbody>();
         BallZLine = GameObject.Find("BallZLine");
         BallZLineHorizontal = GameObject.Find("BallZLineHorizontal");
@@ -33,10 +37,18 @@ public class BallController : MonoBehaviour
     //一定秒数ごとに呼び出される. デフォルトは20ms間隔らしい
     void FixedUpdate()
     {
-        //ボールのスピードをいい感じに調整する
-        adjustBallSpeed();
+        if (counter > COUNTER_ADJUST_THRESHOLD)
+        {
+            //ボールのスピードをいい感じに調整する
+            adjustBallSpeed();
+        }
 
-        lastVelocity = rb.velocity;
+        //異様に速度が遅くなっている場合はその速度は採用しない
+        if(Mathf.Abs(rb.velocity.z) >= Z_CONSTANT_HALF_VELOCITY || counter < COUNTER_ADJUST_THRESHOLD)
+        {
+            lastVelocity = rb.velocity;
+        }
+
         //iTween.MoveTo(BallZLine, iTween.Hash("x", this.transform.position.x, "y", this.transform.position.y));
         BallZLine.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
         BallZLineHorizontal.transform.position = new Vector3(0, this.transform.position.y, this.transform.position.z);
@@ -56,34 +68,19 @@ public class BallController : MonoBehaviour
         float vy = rb.velocity.y;
         float vz = rb.velocity.z;
         float vz_abs = Mathf.Abs(vz);
-        /*
-                if(Mathf.Abs(vx) >= XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY)
-                {
-                    vx = vx >= 0 ? XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY : -1 * XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY;
-                }
-                if(Mathf.Abs(vx) <= XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY)
-                {
-                    vx = vx >= 0 ? XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY : -1 * XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY;
-                }
 
-                if(Mathf.Abs(vy) >= XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY)
-                {
-                    vy = vy >= 0 ? XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY : -1 * XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY;
-                }
-                if(Mathf.Abs(vy) <= XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY)
-                {
-                    vy = vy >= 0 ? XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY : -1 * XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY;
-                }
-        */
-        if (vz_abs <= Z_CONSTANT_VELOCITY) {
+
+        if (vz_abs <= Z_STRANGE_VELOCITY_THRESHOLD && counter > COUNTER_ADJUST_THRESHOLD) {
             // 突き抜け等の可能性があるため必ず手前方向に移動させる
             vz_abs = Z_CONSTANT_VELOCITY;
             vz = -1 * Z_CONSTANT_VELOCITY;
         }
-        else if (vz_abs <= Z_CONSTANT_VELOCITY){
+
+        if (vz_abs < Z_CONSTANT_VELOCITY){
             vz_abs = Z_CONSTANT_VELOCITY;
             vz = vz >= 0 ? Z_CONSTANT_VELOCITY : -1 * Z_CONSTANT_VELOCITY;
         }
+
 
         if(Mathf.Abs(vx) >= XY_VELOCITY_LATIO_UPPER * vz_abs)
         {

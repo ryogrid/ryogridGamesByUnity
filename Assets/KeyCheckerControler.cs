@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class KeyCheckerControler : MonoBehaviour
 {
-
     public GameObject BallPrefab;
     public GameObject RacketPrefab;
     private GameObject ScoreText;
@@ -127,16 +126,23 @@ public class KeyCheckerControler : MonoBehaviour
         }
         createdBall = Instantiate(BallPrefab, new Vector3(0, 0, -1.5f), Quaternion.identity);
         //createdCannonball = Instantiate(CannonballPrefab, new Vector3(-8f, -4.5f, 0), Quaternion.identity);
-        float shotPowerXY = 60f;
-        float shotPowerFixedZ = 60f;
+        //float shotPowerXY = 60f;
+        float shotVerocityFixedZ = BallController.Z_CONSTANT_VELOCITY;
         //float shotPowerFixedZ = 1000f;
+
         float shotAngle = Random.Range(0f, 360f);
-        float x_power = Mathf.Cos(2 * Mathf.PI * (shotAngle / 360f)) * shotPowerXY;
-        float y_power = Mathf.Sin(2 * Mathf.PI  * (shotAngle / 360f)) * shotPowerXY;
+        /*
+                float x_power = Mathf.Cos(2 * Mathf.PI * (shotAngle / 360f)) * shotPowerXY;
+                float y_power = Mathf.Sin(2 * Mathf.PI  * (shotAngle / 360f)) * shotPowerXY;
+        */
+        float x_speed = Mathf.Cos(2 * Mathf.PI * (shotAngle / 360f)) * shotVerocityFixedZ;
+        float y_speed = Mathf.Sin(2 * Mathf.PI * (shotAngle / 360f)) * shotVerocityFixedZ;
 
         createdBall.GetComponent<Renderer>().material.color = Color.black;
-        createdBall.GetComponent<Rigidbody>().AddForce(new Vector3(x_power, y_power, shotPowerFixedZ));
-        createdBall.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, shotPowerFixedZ));
+        //createdBall.GetComponent<Rigidbody>().AddForce(new Vector3(x_power, y_power, shotVerocityFixedZ));
+        createdBall.GetComponent<Rigidbody>().velocity = new Vector3(x_speed, y_speed, shotVerocityFixedZ);
+
+        //createdBall.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, shotPowerFixedZ));
 
         ScoreText.GetComponent<TextMesh>().text = "0 回";
         //内部状態を初期化するために作り直す
