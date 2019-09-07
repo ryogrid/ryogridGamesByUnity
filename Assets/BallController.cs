@@ -12,7 +12,8 @@ public class BallController : MonoBehaviour
     private Vector3 lastPosition;
     private int counter = 0;
 
-    private const float Z_CONSTANT_VELOCITY = 0.7f; 
+    private const float Z_CONSTANT_VELOCITY = 2.5f;
+    private const float Z_STRANGE_VELOCITY_THRESHOLD = 0.1f;
     private const float XY_VELOCITY_LATIO_UPPER = 1f;
     private const float XY_VELOCITY_LATIO_BOTTOM = 0.2f;
 
@@ -55,25 +56,35 @@ public class BallController : MonoBehaviour
         float vy = rb.velocity.y;
         float vz = rb.velocity.z;
         float vz_abs = Mathf.Abs(vz);
-/*
-        if(Mathf.Abs(vx) >= XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY)
-        {
-            vx = vx >= 0 ? XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY : -1 * XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY;
+        /*
+                if(Mathf.Abs(vx) >= XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY)
+                {
+                    vx = vx >= 0 ? XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY : -1 * XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY;
+                }
+                if(Mathf.Abs(vx) <= XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY)
+                {
+                    vx = vx >= 0 ? XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY : -1 * XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY;
+                }
+
+                if(Mathf.Abs(vy) >= XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY)
+                {
+                    vy = vy >= 0 ? XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY : -1 * XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY;
+                }
+                if(Mathf.Abs(vy) <= XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY)
+                {
+                    vy = vy >= 0 ? XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY : -1 * XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY;
+                }
+        */
+        if (vz_abs <= Z_CONSTANT_VELOCITY) {
+            // 突き抜け等の可能性があるため必ず手前方向に移動させる
+            vz_abs = Z_CONSTANT_VELOCITY;
+            vz = -1 * Z_CONSTANT_VELOCITY;
         }
-        if(Mathf.Abs(vx) <= XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY)
-        {
-            vx = vx >= 0 ? XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY : -1 * XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY;
+        else if (vz_abs <= Z_CONSTANT_VELOCITY){
+            vz_abs = Z_CONSTANT_VELOCITY;
+            vz = vz >= 0 ? Z_CONSTANT_VELOCITY : -1 * Z_CONSTANT_VELOCITY;
         }
 
-        if(Mathf.Abs(vy) >= XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY)
-        {
-            vy = vy >= 0 ? XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY : -1 * XY_VELOCITY_LATIO_UPPER * Z_CONSTANT_VELOCITY;
-        }
-        if(Mathf.Abs(vy) <= XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY)
-        {
-            vy = vy >= 0 ? XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY : -1 * XY_VELOCITY_LATIO_BOTTOM * Z_CONSTANT_VELOCITY;
-        }
-*/
         if(Mathf.Abs(vx) >= XY_VELOCITY_LATIO_UPPER * vz_abs)
         {
             vx = vx >= 0 ? XY_VELOCITY_LATIO_UPPER * vz_abs : -1 * XY_VELOCITY_LATIO_UPPER * vz_abs;
@@ -90,10 +101,6 @@ public class BallController : MonoBehaviour
         if(Mathf.Abs(vy) <= XY_VELOCITY_LATIO_BOTTOM * vz_abs)
         {
             vy = vy >= 0 ? XY_VELOCITY_LATIO_BOTTOM * vz_abs : -1 * XY_VELOCITY_LATIO_BOTTOM * vz_abs;
-        }
-
-        if(Mathf.Abs(vz) <= Z_CONSTANT_VELOCITY){
-            vz = vz >= 0 ? Z_CONSTANT_VELOCITY : -1 * Z_CONSTANT_VELOCITY;
         }
 
         rb.velocity = new Vector3(vx, vy, vz);
