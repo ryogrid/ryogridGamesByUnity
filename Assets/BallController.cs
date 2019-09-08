@@ -158,7 +158,7 @@ public class BallController : MonoBehaviour
         if(Mathf.Abs(cx) - Mathf.Abs(x) > 0.1f) //左右の壁
         {
             GameObject obj = Instantiate(StampPrefab, new Vector3(wx, y, z), Quaternion.identity);
-            createdParticle = Instantiate(ParticlePrefab, new Vector3(wx, y, z), Quaternion.identity);
+            createdParticle = Instantiate(ParticlePrefab, new Vector3(cx, y, z), Quaternion.identity);
             obj.transform.rotation = Quaternion.Euler(0, 0, 90) * obj.transform.rotation;
             return;
         }
@@ -166,7 +166,7 @@ public class BallController : MonoBehaviour
         if(Mathf.Abs(cy) - Mathf.Abs(y) > 0.1f) //上下の壁
         {
             GameObject obj = Instantiate(StampPrefab, new Vector3(x, wy, z), Quaternion.identity);
-            createdParticle = Instantiate(ParticlePrefab, new Vector3(x, wy, z), Quaternion.identity);
+            createdParticle = Instantiate(ParticlePrefab, new Vector3(x, cy, z), Quaternion.identity);
             return;
         }
 
