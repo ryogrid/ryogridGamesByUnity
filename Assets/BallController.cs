@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
+    public GameObject StampPrefab;
+
     private Rigidbody rb;
     private GameObject BallZLine;
     private GameObject BallZLineHorizontal;
@@ -126,6 +128,59 @@ public class BallController : MonoBehaviour
         }
     }
 
+    void createStamp(Collision coll)
+    {
+        float x = gameObject.transform.position.x;
+        float y = gameObject.transform.position.y;
+        float z = gameObject.transform.position.z;
+
+        //当たり判定が発生した座標
+        Vector3 contactCood = coll.GetContact(0).point;
+        float cx = contactCood.x;
+        float cy = contactCood.y;
+        float cz = contactCood.z;
+
+        GameObject wall = coll.gameObject;
+        float wx = wall.transform.position.x;
+        float wy = wall.transform.position.y;
+        float wz = wall.transform.position.z;        
+
+        // 0.1fは差が明確にあることを判定するために適当に選んだ閾値
+
+        if(Mathf.Abs(cx) - Mathf.Abs(x) > 0.1f) //左右の壁
+        {
+            GameObject obj = Instantiate(StampPrefab, new Vector3(wx, y, z), Quaternion.identity);
+            obj.transform.rotation = Quaternion.Euler(0, 0, 90) * obj.transform.rotation;
+            return;
+        }
+
+        if(Mathf.Abs(cy) - Mathf.Abs(y) > 0.1f) //上下の壁
+        {
+            GameObject obj = Instantiate(StampPrefab, new Vector3(x, wy, z), Quaternion.identity);
+            return;
+        }
+
+        if(Mathf.Abs(cz) - Mathf.Abs(z) > 0.1f) //奥の壁もしくはラケット
+        {
+            if(z > 0) //奥の壁
+            {
+
+                GameObject obj = Instantiate(StampPrefab, new Vector3(x, y, wz), Quaternion.identity);
+                obj.transform.rotation = Quaternion.Euler(90, 0, 0) * obj.transform.rotation;
+                return;
+            }
+            else //ラケット
+            {
+                GameObject obj = Instantiate(StampPrefab, new Vector3(x, y, wz), Quaternion.identity);
+                //薄くする
+                obj.transform.localScale = new Vector3(0.3f, 0.001f, 0.3f);
+                obj.transform.rotation = Quaternion.Euler(90, 0, 0) * obj.transform.rotation;
+                
+                return;
+            }
+        }
+    }
+
     void OnCollisionEnter(Collision coll)
     {
         Vector3 refrectVec = Vector3.Reflect(this.lastVelocity, coll.contacts[0].normal);
@@ -134,6 +189,7 @@ public class BallController : MonoBehaviour
         refrectVec.y *= 1.01f;
         refrectVec.z *= 1.01f;
         rb.velocity = refrectVec;
+        createStamp(coll);
         audioSource.PlayOneShot(audioBound);
     }
 
