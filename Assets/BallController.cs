@@ -5,6 +5,7 @@ using UnityEngine;
 public class BallController : MonoBehaviour
 {
     public GameObject StampPrefab;
+    public GameObject ParticlePrefab;
 
     private Rigidbody rb;
     private GameObject BallZLine;
@@ -24,6 +25,8 @@ public class BallController : MonoBehaviour
     public AudioClip audioBound;
 
     private const int COUNTER_ADJUST_THRESHOLD = 5;
+
+    private GameObject createdParticle = null;
 
     // Start is called before the first frame update
     void Start()
@@ -147,9 +150,15 @@ public class BallController : MonoBehaviour
 
         // 0.1fは差が明確にあることを判定するために適当に選んだ閾値
 
+        if(createdParticle != null)
+        {
+            Destroy(createdParticle);
+        }
+
         if(Mathf.Abs(cx) - Mathf.Abs(x) > 0.1f) //左右の壁
         {
             GameObject obj = Instantiate(StampPrefab, new Vector3(wx, y, z), Quaternion.identity);
+            createdParticle = Instantiate(ParticlePrefab, new Vector3(wx, y, z), Quaternion.identity);
             obj.transform.rotation = Quaternion.Euler(0, 0, 90) * obj.transform.rotation;
             return;
         }
@@ -157,6 +166,7 @@ public class BallController : MonoBehaviour
         if(Mathf.Abs(cy) - Mathf.Abs(y) > 0.1f) //上下の壁
         {
             GameObject obj = Instantiate(StampPrefab, new Vector3(x, wy, z), Quaternion.identity);
+            createdParticle = Instantiate(ParticlePrefab, new Vector3(x, wy, z), Quaternion.identity);
             return;
         }
 
@@ -166,6 +176,7 @@ public class BallController : MonoBehaviour
             {
 
                 GameObject obj = Instantiate(StampPrefab, new Vector3(x, y, wz), Quaternion.identity);
+                createdParticle = Instantiate(ParticlePrefab, new Vector3(x, y, cz), Quaternion.identity);
                 obj.transform.rotation = Quaternion.Euler(90, 0, 0) * obj.transform.rotation;
                 return;
             }

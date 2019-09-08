@@ -95,6 +95,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StampPrefab: {fileID: 3035762211705307402, guid: dfc0c95ef0d7c91408b04c524876d3d7,
     type: 3}
+  ParticlePrefab: {fileID: 1735024089641582, guid: 378b2c30ef426554495292cb902cb8f4,
+    type: 3}
   audioBound: {fileID: 8300000, guid: 27fc2dbe40bcdf24e83b98dcf00895fe, type: 3}
 --- !u!54 &3619379524379498580
 Rigidbody:
