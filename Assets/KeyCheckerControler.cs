@@ -99,8 +99,12 @@ public class KeyCheckerControler : MonoBehaviour
         ShotParamText1P.GetComponent<Text>().text = (isTurnOfP1 ? "@ " : "") + "Power: " + shotPower1P.ToString() + " Angle: " + shotAngle1P.ToString();
         ShotParamText2P.GetComponent<Text>().text = (!isTurnOfP1 ? "@ " : "") + "Power: " + shotPower2P.ToString() + " Angle: " + shotAngle2P.ToString();
 */
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    shotNewBall();
+        //}
+        if (Input.anyKeyDown) {
             shotNewBall();
         }
 
