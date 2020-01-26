@@ -111,6 +111,7 @@ public class BallController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if (transform.position.z < -3f)
         if (transform.position.z < -3f)
         {
             resetBallZLine();

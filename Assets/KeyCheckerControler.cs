@@ -22,8 +22,8 @@ public class KeyCheckerControler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        createdRacket = Instantiate(RacketPrefab, new Vector3(0, 0, -2f), Quaternion.identity);
-        
+        createdRacket = Instantiate(RacketPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
         ScoreText = GameObject.Find("ScoreMeshText");
         ScoreText.GetComponent<TextMesh>().text = "0 回";
 
@@ -52,59 +52,64 @@ public class KeyCheckerControler : MonoBehaviour
 
     void checkKeyPress()
     {
-/*
-        //updateScreenSizeInfo();
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            createdRacket.transform.position = new Vector3 (createdRacket.transform.position.x, createdRacket.transform.position.y + MOVE_DISTANCE, createdRacket.transform.position.z);
-            //iTween.MoveBy(createdRacket, iTween.Hash("y", MOVE_DISTANCE));
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            createdRacket.transform.position = new Vector3 (createdRacket.transform.position.x, createdRacket.transform.position.y - MOVE_DISTANCE, createdRacket.transform.position.z);
-            //iTween.MoveBy(createdRacket, iTween.Hash("y", -1 * MOVE_DISTANCE));
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            createdRacket.transform.position = new Vector3 (createdRacket.transform.position.x - MOVE_DISTANCE, createdRacket.transform.position.y, createdRacket.transform.position.z);
-            //iTween.MoveBy(createdRacket, iTween.Hash("x", -1 * MOVE_DISTANCE));
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            createdRacket.transform.position = new Vector3 (createdRacket.transform.position.x + MOVE_DISTANCE, createdRacket.transform.position.y, createdRacket.transform.position.z);
-            //iTween.MoveBy(createdRacket, iTween.Hash("x", MOVE_DISTANCE));
-        }
-*/
+        /*
+                //updateScreenSizeInfo();
+                if (Input.GetKey(KeyCode.UpArrow))
+                {
+                    createdRacket.transform.position = new Vector3 (createdRacket.transform.position.x, createdRacket.transform.position.y + MOVE_DISTANCE, createdRacket.transform.position.z);
+                    //iTween.MoveBy(createdRacket, iTween.Hash("y", MOVE_DISTANCE));
+                }
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    createdRacket.transform.position = new Vector3 (createdRacket.transform.position.x, createdRacket.transform.position.y - MOVE_DISTANCE, createdRacket.transform.position.z);
+                    //iTween.MoveBy(createdRacket, iTween.Hash("y", -1 * MOVE_DISTANCE));
+                }
+                if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    createdRacket.transform.position = new Vector3 (createdRacket.transform.position.x - MOVE_DISTANCE, createdRacket.transform.position.y, createdRacket.transform.position.z);
+                    //iTween.MoveBy(createdRacket, iTween.Hash("x", -1 * MOVE_DISTANCE));
+                }
+                if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    createdRacket.transform.position = new Vector3 (createdRacket.transform.position.x + MOVE_DISTANCE, createdRacket.transform.position.y, createdRacket.transform.position.z);
+                    //iTween.MoveBy(createdRacket, iTween.Hash("x", MOVE_DISTANCE));
+                }
+        */
 
-        createdRacket.transform.position = new Vector3 (getConvertedMouseCoodX(), getConvertedMouseCoodY(), createdRacket.transform.position.z);
+        Vector2 stickVal2D = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
+        //createdRacket.transform.position = new Vector3 (getConvertedMouseCoodX(), getConvertedMouseCoodY(), createdRacket.transform.position.z);
+        createdRacket.transform.position = new Vector2(createdRacket.transform.position.x + 0.1f * stickVal2D.x, createdRacket.transform.position.y + 0.1f * stickVal2D.y);
 
-/*
-        //一定間隔で定期的にクリアする
-        msgTimeCounter += CHECK_INTERVAL;
-        if (msgTimeCounter > 3f)
-        {
-            MessageText.GetComponent<Text>().text = "";
-            msgTimeCounter = 0;
-        }
+        /*
+                //一定間隔で定期的にクリアする
+                msgTimeCounter += CHECK_INTERVAL;
+                if (msgTimeCounter > 3f)
+                {
+                    MessageText.GetComponent<Text>().text = "";
+                    msgTimeCounter = 0;
+                }
 
-        //的がユーザのプレイで消滅していたら再生成する
-        if (createdMato1P == null)
-        {
-            placeMato();
-        }
-        if (createdMato2P == null)
-        {
-            placeMato();
-        }
-        ShotParamText1P.GetComponent<Text>().text = (isTurnOfP1 ? "@ " : "") + "Power: " + shotPower1P.ToString() + " Angle: " + shotAngle1P.ToString();
-        ShotParamText2P.GetComponent<Text>().text = (!isTurnOfP1 ? "@ " : "") + "Power: " + shotPower2P.ToString() + " Angle: " + shotAngle2P.ToString();
-*/
+                //的がユーザのプレイで消滅していたら再生成する
+                if (createdMato1P == null)
+                {
+                    placeMato();
+                }
+                if (createdMato2P == null)
+                {
+                    placeMato();
+                }
+                ShotParamText1P.GetComponent<Text>().text = (isTurnOfP1 ? "@ " : "") + "Power: " + shotPower1P.ToString() + " Angle: " + shotAngle1P.ToString();
+                ShotParamText2P.GetComponent<Text>().text = (!isTurnOfP1 ? "@ " : "") + "Power: " + shotPower2P.ToString() + " Angle: " + shotAngle2P.ToString();
+        */
 
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
         //    shotNewBall();
         //}
-        if (Input.anyKeyDown) {
+        //if (Input.anyKeyDown) {
+        //    shotNewBall();
+        //}
+        if (OVRInput.Get(OVRInput.Button.One)) {
             shotNewBall();
         }
 
@@ -112,15 +117,15 @@ public class KeyCheckerControler : MonoBehaviour
         RacketZLineVertical.transform.position = new Vector3(createdRacket.transform.position.x, 0, createdRacket.transform.position.z);
     }
 
-    private void reCreateRacket()
-    {
-        if(createdRacket != null)
-        {
-            Destroy(createdRacket);
-            createdRacket = null;            
-        }
-        createdRacket = Instantiate(RacketPrefab, new Vector3(0, 0, -2f), Quaternion.identity);
-    }
+    //private void reCreateRacket()
+    //{
+    //    if(createdRacket != null)
+    //    {
+    //        Destroy(createdRacket);
+    //        createdRacket = null;            
+    //    }
+    //    createdRacket = Instantiate(RacketPrefab, new Vector3(0, 0, -2f), Quaternion.identity);
+    //}
 
     void shotNewBall()
     {
@@ -128,7 +133,8 @@ public class KeyCheckerControler : MonoBehaviour
         {
             return;
         }
-        createdBall = Instantiate(BallPrefab, new Vector3(0, 0, -1.5f), Quaternion.identity);
+        createdBall = Instantiate(BallPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
         //createdCannonball = Instantiate(CannonballPrefab, new Vector3(-8f, -4.5f, 0), Quaternion.identity);
         //float shotPowerXY = 60f;
         float shotVerocityFixedZ = BallController.Z_CONSTANT_VELOCITY;
@@ -150,6 +156,6 @@ public class KeyCheckerControler : MonoBehaviour
 
         ScoreText.GetComponent<TextMesh>().text = "0 回";
         //内部状態を初期化するために作り直す
-        reCreateRacket();
+        //reCreateRacket();
     }
 }
