@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 425471856
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 909432270c54834a539809fc4315d18d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9ce36ba0d2af6073be95f6cdd155d58c
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+Assets:
+- Assets/PixelMplus12-Regular.ttf
+Dependencies: []

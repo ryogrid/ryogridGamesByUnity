@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 2610503136
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 1de374412545a25032c328233c052a89
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f4d58da2e394c3ac790f4c422276af4f
+HashAppended: 0
+ClassTypes:
+- Class: 134
+  Script: {instanceID: 0}
+Assets:
+- Assets/WallMaterial.physicMaterial
+- Assets/BallMaterial.physicMaterial
+- Assets/RacketMaterial.physicMaterial
+Dependencies: []

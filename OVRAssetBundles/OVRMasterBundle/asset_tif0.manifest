@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 942911779
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2482299231ed3e4933d30a8fca434a60
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f19fbf085e00d23fbc8d6cf7b345590b
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+Assets:
+- Assets/EffectExamples/Smoke & Steam Effects/Textures/smokeysteam.tif
+Dependencies: []
