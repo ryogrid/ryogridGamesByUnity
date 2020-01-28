@@ -50,6 +50,7 @@ public class KeyCheckerControler : MonoBehaviour
         return (Input.mousePosition.y / Screen.height) * 5f - 2.5f;
     }
 
+
     void checkKeyPress()
     {
         /*
